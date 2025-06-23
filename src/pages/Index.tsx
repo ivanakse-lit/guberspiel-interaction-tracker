@@ -40,10 +40,10 @@ const Index = () => {
           </div>
           
           <h2 className="text-5xl font-bold text-gray-800 mb-6 leading-tight">
-            Cultivate
-            <span className="bg-gradient-to-r from-orange-500 to-rose-500 bg-clip-text text-transparent"> Gratitude</span>
+            Balance Your
+            <span className="bg-gradient-to-r from-orange-500 to-rose-500 bg-clip-text text-transparent"> Social</span>
             <br />
-            in Your Relationships
+            Interactions
           </h2>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
             Track moments of kindness, support, and love within your social circles. 
