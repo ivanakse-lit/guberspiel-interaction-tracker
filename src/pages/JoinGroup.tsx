@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,17 +10,29 @@ import { useToast } from '@/hooks/use-toast';
 import { joinCircle } from '@/services/circleService'
 import { useAuth } from '@/contexts/AuthContext';
 
+/**
+ * Join Group page component
+ * Allows users to join existing circles using invite links
+ * Handles form validation and circle joining process
+ */
 const JoinGroup = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useAuth();
   
+  // Form state management
   const [loading, setLoading] = useState(false);
   const [inviteLink, setInviteLink] = useState('');
   const [yourName, setYourName] = useState('');
 
+  /**
+   * Handle form submission to join a circle
+   * Validates input, extracts invite code, and calls join service
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Form validation
     if (!inviteLink.trim() || !yourName.trim()) {
       toast({
         title: "Missing information",
@@ -29,6 +42,7 @@ const JoinGroup = () => {
       return;
     }
 
+    // Authentication check
     if (!user) {
       toast({
         title: "Authentication required",
@@ -39,7 +53,7 @@ const JoinGroup = () => {
       return;
     }
 
-    // Extract invite code from link
+    // Extract invite code from full link (supports both full URLs and direct codes)
     const inviteCode = inviteLink.split('/').pop() || inviteLink;
 
     setLoading(true);
@@ -65,7 +79,7 @@ const JoinGroup = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      {/* Header */}
+      {/* Header with back navigation */}
       <header className="container mx-auto px-4 py-6">
         <div className="flex items-center space-x-4">
           <Button 
@@ -83,8 +97,10 @@ const JoinGroup = () => {
 
       <div className="container mx-auto px-4 pb-8">
         <div className="max-w-lg mx-auto">
+          {/* Main form card */}
           <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg">
             <CardHeader className="text-center">
+              {/* Icon and title */}
               <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="h-8 w-8 text-indigo-600" />
               </div>
@@ -93,7 +109,7 @@ const JoinGroup = () => {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Your Name */}
+                {/* User name input */}
                 <div className="space-y-2">
                   <Label htmlFor="yourName">Your Name *</Label>
                   <Input
@@ -105,7 +121,7 @@ const JoinGroup = () => {
                   />
                 </div>
 
-                {/* Invite Link */}
+                {/* Invite link input */}
                 <div className="space-y-2">
                   <Label htmlFor="inviteLink">Invite Link *</Label>
                   <div className="relative">
@@ -120,7 +136,7 @@ const JoinGroup = () => {
                   </div>
                 </div>
 
-                {/* Info Box */}
+                {/* Information box about the joining process */}
                 <div className="bg-blue-50 p-4 rounded-lg">
                   <h4 className="font-medium text-blue-900 mb-2">What happens next?</h4>
                   <ul className="text-sm text-blue-700 space-y-1">
@@ -131,7 +147,7 @@ const JoinGroup = () => {
                   </ul>
                 </div>
 
-                {/* Submit */}
+                {/* Submit button */}
                 <Button 
                   type="submit" 
                   className="w-full bg-indigo-600 hover:bg-indigo-700"
@@ -144,7 +160,7 @@ const JoinGroup = () => {
             </CardContent>
           </Card>
 
-          {/* Alternative */}
+          {/* Alternative action */}
           <div className="text-center mt-8">
             <p className="text-gray-600 mb-4">Don't have an invite link?</p>
             <Button 

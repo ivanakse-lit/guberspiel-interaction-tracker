@@ -5,14 +5,19 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Heart, HandHeart, Users, Plus, Smile, Trophy, Gift } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Landing page component for Güberspiel
+ * Displays the main value proposition and allows users to create or join circles
+ */
 const Index = () => {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
-      {/* Header */}
+      {/* Header with logo and dashboard navigation */}
       <header className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
+          {/* Brand logo and name */}
           <div className="flex items-center space-x-2">
             <div className="bg-gradient-to-br from-orange-400 to-rose-400 p-2 rounded-full">
               <Heart className="h-6 w-6 text-white" />
@@ -21,6 +26,7 @@ const Index = () => {
               Güberspiel
             </h1>
           </div>
+          {/* Dashboard access button */}
           <Button 
             variant="outline" 
             onClick={() => navigate('/dashboard')}
@@ -31,15 +37,17 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero section with main value proposition */}
       <section className="container mx-auto px-4 py-12 text-center">
         <div className="max-w-4xl mx-auto">
+          {/* Hero icon */}
           <div className="mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-400 to-rose-400 rounded-full mb-6 shadow-lg">
               <HandHeart className="h-10 w-10 text-white" />
             </div>
           </div>
           
+          {/* Main headline and description */}
           <h2 className="text-5xl font-bold text-gray-800 mb-6 leading-tight">
             Balance Your
             <span className="bg-gradient-to-r from-orange-500 to-rose-500 bg-clip-text text-transparent"> Social</span>
@@ -51,6 +59,7 @@ const Index = () => {
             Foster deeper connections through awareness and appreciation of the care you share.
           </p>
           
+          {/* Primary call-to-action buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button 
               size="lg" 
@@ -73,7 +82,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Features section showcasing main benefits */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h3 className="text-3xl font-bold text-gray-800 mb-4">
@@ -84,7 +93,9 @@ const Index = () => {
           </p>
         </div>
         
+        {/* Feature cards grid */}
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {/* Feature 1: Communities */}
           <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 group">
             <CardContent className="p-8 text-center">
               <div className="bg-gradient-to-br from-blue-100 to-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -97,6 +108,7 @@ const Index = () => {
             </CardContent>
           </Card>
 
+          {/* Feature 2: Moments */}
           <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 group">
             <CardContent className="p-8 text-center">
               <div className="bg-gradient-to-br from-emerald-100 to-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -109,6 +121,7 @@ const Index = () => {
             </CardContent>
           </Card>
 
+          {/* Feature 3: Balance */}
           <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300 group">
             <CardContent className="p-8 text-center">
               <div className="bg-gradient-to-br from-rose-100 to-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -123,13 +136,15 @@ const Index = () => {
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* How it works section with step-by-step process */}
       <section className="container mx-auto px-4 py-16">
         <div className="bg-gradient-to-r from-orange-100/50 to-rose-100/50 rounded-3xl p-12 backdrop-blur-sm">
           <div className="max-w-4xl mx-auto text-center">
             <h3 className="text-3xl font-bold text-gray-800 mb-12">Your Journey of Gratitude</h3>
             
+            {/* Process steps */}
             <div className="grid md:grid-cols-3 gap-8">
+              {/* Step 1: Connect */}
               <div className="space-y-4">
                 <div className="bg-gradient-to-br from-orange-500 to-rose-500 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto text-xl font-bold shadow-lg">
                   <Smile className="h-8 w-8" />
@@ -140,6 +155,7 @@ const Index = () => {
                 </p>
               </div>
 
+              {/* Step 2: Appreciate */}
               <div className="space-y-4">
                 <div className="bg-gradient-to-br from-orange-500 to-rose-500 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto text-xl font-bold shadow-lg">
                   <HandHeart className="h-8 w-8" />
@@ -150,6 +166,7 @@ const Index = () => {
                 </p>
               </div>
 
+              {/* Step 3: Flourish */}
               <div className="space-y-4">
                 <div className="bg-gradient-to-br from-orange-500 to-rose-500 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto text-xl font-bold shadow-lg">
                   <Trophy className="h-8 w-8" />

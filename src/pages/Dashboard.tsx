@@ -11,6 +11,7 @@ import RecentInteractions from '@/components/dashboard/RecentInteractions';
 import CirclesList from '@/components/dashboard/CirclesList';
 import BalanceByCircle from '@/components/dashboard/BalanceByCircle';
 
+// Type definitions for data structures
 interface Circle {
   id: number;
   name: string;
@@ -28,16 +29,27 @@ interface CircleMembership {
   circle: Circle;
 }
 
+/**
+ * Main dashboard page component
+ * Displays user's circles, balance overview, and recent interactions
+ * Handles authentication and data fetching
+ */
 const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useAuth();
   
+  // State management
   const [userCircles, setUserCircles] = useState<CircleMembership[]>([]);
   const [loading, setLoading] = useState(true);
 
+  /**
+   * Fetch user's circles on component mount
+   * Redirects to auth if user is not authenticated
+   */
   useEffect(() => {
     const fetchUserCircles = async () => {
+      // Check authentication
       if (!user) {
         navigate('/auth');
         return;
@@ -62,8 +74,10 @@ const Dashboard = () => {
     fetchUserCircles();
   }, [user, navigate, toast]);
 
+  // Placeholder balance calculation (to be implemented with actual interaction data)
   const userBalance = 0;
 
+  // Loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
@@ -78,11 +92,14 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
+      {/* Header with navigation and main actions */}
       <DashboardHeader />
 
       <div className="container mx-auto px-4 pb-8">
+        {/* Key metrics overview */}
         <BalanceOverview userBalance={userBalance} circleCount={userCircles.length} />
 
+        {/* Main content tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList className="bg-white/80 backdrop-blur-sm border border-orange-100">
             <TabsTrigger value="overview" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-100 data-[state=active]:to-rose-100">
@@ -93,6 +110,7 @@ const Dashboard = () => {
             </TabsTrigger>
           </TabsList>
 
+          {/* Overview tab: Recent interactions and circles list */}
           <TabsContent value="overview" className="space-y-8">
             <div className="grid lg:grid-cols-2 gap-8">
               <RecentInteractions />
@@ -100,6 +118,7 @@ const Dashboard = () => {
             </div>
           </TabsContent>
 
+          {/* Balance by circle tab: Detailed balance breakdown */}
           <TabsContent value="by-group" className="space-y-6">
             <BalanceByCircle userCircles={userCircles} />
           </TabsContent>
