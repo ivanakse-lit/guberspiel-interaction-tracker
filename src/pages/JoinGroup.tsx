@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,15 +6,19 @@ import { Label } from '@/components/ui/label';
 import { ArrowLeft, Users, Link } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { joinCircle } from '@/services/circleService'
+import { useAuth } from '@/contexts/AuthContext';
 
 const JoinGroup = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth();
   
+  const [loading, setLoading] = useState(false);
   const [inviteLink, setInviteLink] = useState('');
   const [yourName, setYourName] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inviteLink.trim() || !yourName.trim()) {
       toast({
@@ -26,12 +29,38 @@ const JoinGroup = () => {
       return;
     }
 
-    toast({
-      title: "Joined circle!",
-      description: "You've successfully joined the circle.",
-    });
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to join a circle.",
+        variant: "destructive"
+      });
+      navigate('/auth');
+      return;
+    }
 
-    navigate('/dashboard');
+    // Extract invite code from link
+    const inviteCode = inviteLink.split('/').pop() || inviteLink;
+
+    setLoading(true);
+    try {
+      await joinCircle(inviteCode, yourName);
+      
+      toast({
+        title: "Joined circle!",
+        description: "You've successfully joined the circle.",
+      });
+
+      navigate('/dashboard');
+    } catch (error: any) {
+      toast({
+        title: "Error joining circle",
+        description: error.message || "An unexpected error occurred",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -107,8 +136,9 @@ const JoinGroup = () => {
                   type="submit" 
                   className="w-full bg-indigo-600 hover:bg-indigo-700"
                   size="lg"
+                  disabled={loading}
                 >
-                  Join Circle
+                  {loading ? 'Joining Circle...' : 'Join Circle'}
                 </Button>
               </form>
             </CardContent>

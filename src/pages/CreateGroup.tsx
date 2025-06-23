@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,16 +8,20 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Users, Copy, Plus, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { createCircle } from '@/services/circleService'
+import { useAuth } from '@/contexts/AuthContext'
 
 const CreateGroup = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth();
   
   const [circleName, setCircleName] = useState('');
   const [description, setDescription] = useState('');
   const [members, setMembers] = useState<string[]>([]);
   const [newMember, setNewMember] = useState('');
   const [inviteLink, setInviteLink] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const addMember = () => {
     if (newMember.trim() && !members.includes(newMember.trim())) {
@@ -44,7 +47,7 @@ const CreateGroup = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!circleName.trim()) {
       toast({
@@ -55,12 +58,35 @@ const CreateGroup = () => {
       return;
     }
 
-    toast({
-      title: "Circle created!",
-      description: `${circleName} has been created successfully.`,
-    });
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to create a circle.",
+        variant: "destructive"
+      });
+      navigate('/auth');
+      return;
+    }
 
-    navigate('/dashboard');
+    setLoading(true);
+    try {
+      const { circle, inviteCode } = await createCircle(circleName, description, members);
+      
+      toast({
+        title: "Circle created!",
+        description: `${circleName} has been created successfully.`,
+      });
+
+      navigate('/dashboard');
+    } catch (error: any) {
+      toast({
+        title: "Error creating circle",
+        description: error.message || "An unexpected error occurred",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -214,8 +240,9 @@ const CreateGroup = () => {
                   type="submit" 
                   className="w-full bg-indigo-600 hover:bg-indigo-700"
                   size="lg"
+                  disabled={loading}
                 >
-                  Create Circle
+                  {loading ? 'Creating Circle...' : 'Create Circle'}
                 </Button>
               </form>
             </CardContent>
