@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 /**
  * Landing page component for Güberspiel
- * Displays the main value proposition and allows users to create or join circles
+ * Displays the main value proposition and allows users to create circles
  */
 const Index = () => {
   const navigate = useNavigate();
@@ -59,8 +59,8 @@ const Index = () => {
             Foster deeper connections through awareness and appreciation of the care you share.
           </p>
           
-          {/* Primary call-to-action buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          {/* Primary call-to-action button */}
+          <div className="flex justify-center mb-12">
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
@@ -69,15 +69,18 @@ const Index = () => {
               <Plus className="h-5 w-5 mr-2" />
               Create Your Circle
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline"
-              className="bg-white/80 backdrop-blur-sm border-orange-200 hover:bg-orange-50 text-orange-700 px-8 py-4 rounded-full"
-              onClick={() => navigate('/join-group')}
-            >
-              <Users className="h-5 w-5 mr-2" />
-              Join a Circle
-            </Button>
+          </div>
+          
+          {/* Information about invitation system */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 max-w-2xl mx-auto">
+            <div className="flex items-center justify-center mb-3">
+              <Users className="h-6 w-6 text-indigo-600 mr-2" />
+              <h4 className="text-lg font-semibold text-indigo-900">Invitation-Only Circles</h4>
+            </div>
+            <p className="text-indigo-700 text-sm">
+              Create secure circles and invite your loved ones via email. 
+              Only invited members can join, ensuring your gratitude journey remains private and meaningful.
+            </p>
           </div>
         </div>
       </section>
@@ -101,9 +104,9 @@ const Index = () => {
               <div className="bg-gradient-to-br from-blue-100 to-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Users className="h-8 w-8 text-indigo-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-800">Caring Communities</h3>
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">Secure Communities</h3>
               <p className="text-gray-600">
-                Create intimate circles with friends, family, or colleagues to celebrate mutual support and kindness.
+                Create private circles with friends, family, or colleagues through secure email invitations.
               </p>
             </CardContent>
           </Card>
@@ -144,14 +147,14 @@ const Index = () => {
             
             {/* Process steps */}
             <div className="grid md:grid-cols-3 gap-8">
-              {/* Step 1: Connect */}
+              {/* Step 1: Create */}
               <div className="space-y-4">
                 <div className="bg-gradient-to-br from-orange-500 to-rose-500 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto text-xl font-bold shadow-lg">
-                  <Smile className="h-8 w-8" />
+                  <Plus className="h-8 w-8" />
                 </div>
-                <h4 className="text-xl font-semibold text-gray-800">Connect</h4>
+                <h4 className="text-xl font-semibold text-gray-800">Create</h4>
                 <p className="text-gray-600">
-                  Form a circle of care with your loved ones and begin your shared journey of mindfulness.
+                  Create a secure circle and send email invitations to your loved ones to begin your shared journey.
                 </p>
               </div>
 

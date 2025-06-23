@@ -79,15 +79,9 @@ const CirclesList = ({ userCircles }: CirclesListProps) => {
               >
                 Create Your First Circle
               </Button>
-              <div className="text-gray-400 text-sm">or</div>
-              {/* Secondary action: Join existing circle */}
-              <Button 
-                variant="outline"
-                onClick={() => navigate('/join-group')}
-                className="border-orange-200 text-orange-700 hover:bg-orange-50"
-              >
-                Join Existing Circle
-              </Button>
+              <div className="text-gray-400 text-sm">
+                Invite your loved ones via secure email invitations
+              </div>
             </div>
           </div>
         ) : (
