@@ -1,73 +1,147 @@
-# Welcome to your Lovable project
 
-## Project info
+# GratitudeCoin - Tracking Acts of Kindness in Communities
 
-**URL**: https://lovable.dev/projects/02d02769-5226-499e-ac70-e860f51a3028
+A web application that helps communities track and celebrate acts of kindness through a point-based gratitude system.
 
-## How can I edit this code?
+## 🌟 What is GratitudeCoin?
 
-There are several ways of editing your application.
+GratitudeCoin is a digital platform designed to foster appreciation and strengthen relationships within small, close-knit communities like families, friend groups, flatmates, or study groups. Members can give and receive "gratitude points" for acts of kindness, creating a beautiful record of care and support within their circles.
 
-**Use Lovable**
+## ✨ Key Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/02d02769-5226-499e-ac70-e860f51a3028) and start prompting.
+### 🔐 Secure Circle Management
+- **Invitation-only circles** - Join only through secure, email-specific invitations
+- **Pre-approved invitations** with expiring tokens for enhanced security
+- **Circle creation** with customizable descriptions and settings
 
-Changes made via Lovable will be committed automatically to this repo.
+### 💝 Gratitude Tracking
+- **Log interactions** - Record acts of kindness with descriptions and point values
+- **Balance tracking** - See your giving/receiving balance across all circles
+- **Recent activity** - View recent moments of care and appreciation
 
-**Use your preferred IDE**
+### 👥 Community Features
+- **Multiple circles** - Participate in various communities (family, friends, work, etc.)
+- **Circle overview** - See member activity and circle dynamics
+- **History tracking** - Browse past interactions and milestones
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 🎨 Beautiful User Experience
+- **Warm, caring design** with gradient themes in orange and rose tones
+- **Responsive interface** that works on all devices
+- **Intuitive navigation** with clear visual feedback
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🚀 Getting Started
 
-Follow these steps:
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn package manager
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Installation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+1. Clone the repository:
+```bash
+git clone <your-repository-url>
+cd gratitudecoin
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+2. Install dependencies:
+```bash
+npm install
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+4. Open [http://localhost:5173](http://localhost:5173) in your browser
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🛠 Tech Stack
 
-**Use GitHub Codespaces**
+- **Frontend**: React 18 with TypeScript
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **Routing**: React Router DOM
+- **Build Tool**: Vite
+- **Backend**: Supabase (Authentication, Database, Real-time)
+- **State Management**: React Query for server state
+- **Icons**: Lucide React
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📁 Project Structure
 
-## What technologies are used for this project?
+```
+src/
+├── components/
+│   ├── ui/                 # shadcn/ui components
+│   ├── dashboard/          # Dashboard-specific components
+│   └── AuthForm.tsx        # Authentication form
+├── contexts/
+│   └── AuthContext.tsx     # Authentication context
+├── pages/
+│   ├── Index.tsx          # Landing page
+│   ├── Dashboard.tsx      # Main dashboard
+│   ├── Auth.tsx           # Authentication page
+│   ├── CreateGroup.tsx    # Circle creation
+│   ├── JoinGroup.tsx      # Circle joining
+│   ├── LogInteraction.tsx # Interaction logging
+│   └── ...                # Other pages
+├── services/
+│   └── circleService.ts   # API service functions
+└── lib/
+    └── utils.ts           # Utility functions
+```
 
-This project is built with:
+## 🔧 Key Components
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Authentication
+- Secure user registration and login via Supabase Auth
+- Protected routes requiring authentication
+- User session management
 
-## How can I deploy this project?
+### Circle Management
+- Create new circles with invite codes
+- Join circles through secure invitations
+- Manage circle memberships and permissions
 
-Simply open [Lovable](https://lovable.dev/projects/02d02769-5226-499e-ac70-e860f51a3028) and click on Share -> Publish.
+### Interaction Tracking
+- Log acts of kindness with descriptions
+- Assign point values to interactions
+- Track giving and receiving across circles
 
-## Can I connect a custom domain to my Lovable project?
+## 🎯 Use Cases
 
-Yes, you can!
+- **Families**: Track household chores, emotional support, and family activities
+- **Flatmates**: Appreciate cleaning, cooking, and shared responsibilities
+- **Friend Groups**: Celebrate social support, favors, and quality time
+- **Study Groups**: Recognize academic help, resource sharing, and encouragement
+- **Work Teams**: Acknowledge collaboration, mentoring, and team support
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🔮 Future Enhancements
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Email notifications for invitations and interactions
+- Advanced analytics and insights
+- Achievements and milestones
+- Mobile app development
+- Integration with calendar and task management tools
+
+## 🤝 Contributing
+
+We welcome contributions! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- Built with love using modern web technologies
+- Inspired by the power of gratitude and community
+- Designed to strengthen human connections in our digital age
+
+---
+
+*GratitudeCoin - Where every act of kindness counts* ✨
