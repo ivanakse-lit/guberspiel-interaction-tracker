@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -166,7 +165,11 @@ const Dashboard = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {groups.map((group) => (
-                    <div key={group.id} className="flex items-center justify-between p-4 bg-white/50 rounded-lg hover:bg-white/70 transition-colors cursor-pointer">
+                    <div 
+                      key={group.id} 
+                      className="flex items-center justify-between p-4 bg-white/50 rounded-lg hover:bg-white/70 transition-colors cursor-pointer"
+                      onClick={() => navigate(`/group/${group.id}/history`)}
+                    >
                       <div className="flex items-center space-x-3">
                         <div className="bg-indigo-100 p-2 rounded-full">
                           <Users className="h-4 w-4 text-indigo-600" />
@@ -180,6 +183,7 @@ const Dashboard = () => {
                         <div className={`text-lg font-bold ${group.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                           {group.balance >= 0 ? '+' : ''}{group.balance}
                         </div>
+                        <p className="text-xs text-gray-500">Click for history</p>
                       </div>
                     </div>
                   ))}

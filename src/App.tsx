@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import LogInteraction from "./pages/LogInteraction";
 import CreateGroup from "./pages/CreateGroup";
 import JoinGroup from "./pages/JoinGroup";
+import GroupHistory from "./pages/GroupHistory";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
