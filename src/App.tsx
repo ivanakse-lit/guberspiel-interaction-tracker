@@ -10,6 +10,7 @@ import LogInteraction from "./pages/LogInteraction";
 import CreateGroup from "./pages/CreateGroup";
 import JoinGroup from "./pages/JoinGroup";
 import GroupHistory from "./pages/GroupHistory";
+import GroupOverview from "./pages/GroupOverview";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,8 @@ const App = () => (
           <Route path="/log-interaction" element={<LogInteraction />} />
           <Route path="/create-group" element={<CreateGroup />} />
           <Route path="/join-group" element={<JoinGroup />} />
+          <Route path="/group/:groupId/history" element={<GroupHistory />} />
+          <Route path="/group/:groupId/overview" element={<GroupOverview />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

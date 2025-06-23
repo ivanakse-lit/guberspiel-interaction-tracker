@@ -167,8 +167,7 @@ const Dashboard = () => {
                   {groups.map((group) => (
                     <div 
                       key={group.id} 
-                      className="flex items-center justify-between p-4 bg-white/50 rounded-lg hover:bg-white/70 transition-colors cursor-pointer"
-                      onClick={() => navigate(`/group/${group.id}/history`)}
+                      className="flex items-center justify-between p-4 bg-white/50 rounded-lg hover:bg-white/70 transition-colors"
                     >
                       <div className="flex items-center space-x-3">
                         <div className="bg-indigo-100 p-2 rounded-full">
@@ -179,11 +178,30 @@ const Dashboard = () => {
                           <p className="text-sm text-gray-600">{group.members} members</p>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className={`text-lg font-bold ${group.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {group.balance >= 0 ? '+' : ''}{group.balance}
+                      <div className="flex items-center space-x-2">
+                        <div className="text-right">
+                          <div className={`text-lg font-bold ${group.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {group.balance >= 0 ? '+' : ''}{group.balance}
+                          </div>
                         </div>
-                        <p className="text-xs text-gray-500">Click for history</p>
+                        <div className="flex flex-col space-y-1">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => navigate(`/group/${group.id}/overview`)}
+                            className="text-xs bg-white/70 hover:bg-white"
+                          >
+                            Overview
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => navigate(`/group/${group.id}/history`)}
+                            className="text-xs bg-white/70 hover:bg-white"
+                          >
+                            History
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   ))}
