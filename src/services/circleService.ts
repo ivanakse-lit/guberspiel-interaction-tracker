@@ -1,4 +1,5 @@
-import { supabase, Circle, CircleMembership } from '@/integrations/supabase/client'
+
+import { supabase } from '@/integrations/supabase/client'
 
 export const createCircle = async (name: string, description: string, memberNames: string[]) => {
   const user = await supabase.auth.getUser()
@@ -9,7 +10,7 @@ export const createCircle = async (name: string, description: string, memberName
 
   // Create the circle
   const { data: circle, error: circleError } = await supabase
-    .from('circles')
+    .from('circle')
     .insert({
       name,
       description,
@@ -54,7 +55,7 @@ export const joinCircle = async (inviteCode: string, userName: string) => {
 
   // Find the circle
   const { data: circle, error: circleError } = await supabase
-    .from('circles')
+    .from('circle')
     .select('*')
     .eq('invite_code', inviteCode)
     .single()
@@ -93,7 +94,7 @@ export const getUserCircles = async () => {
     .from('circle_memberships')
     .select(`
       *,
-      circles (*)
+      circle (*)
     `)
     .eq('user_id', user.data.user.id)
 

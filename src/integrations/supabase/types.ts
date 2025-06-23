@@ -12,47 +12,102 @@ export type Database = {
       circle: {
         Row: {
           created_at: string
+          created_by: string | null
+          description: string | null
           id: number
+          invite_code: string
+          name: string
         }
         Insert: {
           created_at?: string
+          created_by?: string | null
+          description?: string | null
           id?: number
+          invite_code?: string
+          name?: string
         }
         Update: {
           created_at?: string
+          created_by?: string | null
+          description?: string | null
           id?: number
+          invite_code?: string
+          name?: string
         }
         Relationships: []
       }
       circle_memberships: {
         Row: {
+          circle_id: number | null
           created_at: string
           id: number
+          joined_at: string | null
+          user_id: string | null
+          user_name: string
         }
         Insert: {
+          circle_id?: number | null
           created_at?: string
           id?: number
+          joined_at?: string | null
+          user_id?: string | null
+          user_name?: string
         }
         Update: {
+          circle_id?: number | null
           created_at?: string
           id?: number
+          joined_at?: string | null
+          user_id?: string | null
+          user_name?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "circle_memberships_circle_id_fkey"
+            columns: ["circle_id"]
+            isOneToOne: false
+            referencedRelation: "circle"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       interactions: {
         Row: {
+          circle_id: number | null
           created_at: string
+          description: string
+          giver_id: string | null
           id: number
+          points: number
+          receiver_id: string | null
         }
         Insert: {
+          circle_id?: number | null
           created_at?: string
+          description?: string
+          giver_id?: string | null
           id?: number
+          points?: number
+          receiver_id?: string | null
         }
         Update: {
+          circle_id?: number | null
           created_at?: string
+          description?: string
+          giver_id?: string | null
           id?: number
+          points?: number
+          receiver_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "interactions_circle_id_fkey"
+            columns: ["circle_id"]
+            isOneToOne: false
+            referencedRelation: "circle"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
