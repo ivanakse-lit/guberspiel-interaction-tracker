@@ -1,13 +1,16 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Scale, Plus, Users, TrendingUp, TrendingDown, ArrowLeft, BarChart3 } from 'lucide-react';
+import { Scale, Plus, Users, TrendingUp, TrendingDown, ArrowLeft, BarChart3, Edit, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   
   // Mock data for demonstration
   const [userBalance] = useState(5);
@@ -17,12 +20,20 @@ const Dashboard = () => {
     { id: 3, type: 'give', description: 'Cooked dinner for the group', recipient: 'Everyone', value: 1, date: '2 days ago', group: 'Flatmates' },
   ]);
 
-  const [groups] = useState([
+  const [groups, setGroups] = useState([
     { id: 1, name: 'Flatmates', members: 4, balance: 2 },
     { id: 2, name: 'Study Group', members: 6, balance: -1 },
     { id: 3, name: 'Family', members: 5, balance: 3 },
     { id: 4, name: 'Work Team', members: 8, balance: 1 },
   ]);
+
+  const handleDeleteGroup = (groupId: number, groupName: string) => {
+    setGroups(prevGroups => prevGroups.filter(group => group.id !== groupId));
+    toast({
+      title: "Group deleted",
+      description: `"${groupName}" has been removed from your groups.`,
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -179,28 +190,47 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <div className="text-right">
+                        <div className="text-right mr-2">
                           <div className={`text-lg font-bold ${group.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                             {group.balance >= 0 ? '+' : ''}{group.balance}
                           </div>
                         </div>
                         <div className="flex flex-col space-y-1">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => navigate(`/group/${group.id}/overview`)}
-                            className="text-xs bg-white/70 hover:bg-white"
-                          >
-                            Overview
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => navigate(`/group/${group.id}/history`)}
-                            className="text-xs bg-white/70 hover:bg-white"
-                          >
-                            History
-                          </Button>
+                          <div className="flex space-x-1">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => navigate(`/group/${group.id}/overview`)}
+                              className="text-xs bg-white/70 hover:bg-white"
+                            >
+                              Overview
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => navigate(`/group/${group.id}/history`)}
+                              className="text-xs bg-white/70 hover:bg-white"
+                            >
+                              History
+                            </Button>
+                          </div>
+                          <div className="flex space-x-1">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="text-xs bg-white/70 hover:bg-white p-1 h-6 w-6"
+                            >
+                              <Edit className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleDeleteGroup(group.id, group.name)}
+                              className="text-xs bg-red-50 hover:bg-red-100 text-red-600 border-red-200 p-1 h-6 w-6"
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
