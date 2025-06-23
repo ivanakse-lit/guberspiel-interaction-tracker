@@ -27,8 +27,8 @@ const JoinGroup = () => {
     }
 
     toast({
-      title: "Joined group!",
-      description: "You've successfully joined the group.",
+      title: "Joined circle!",
+      description: "You've successfully joined the circle.",
     });
 
     navigate('/dashboard');
@@ -48,7 +48,7 @@ const JoinGroup = () => {
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back
           </Button>
-          <h1 className="text-xl font-bold text-gray-900">Join Group</h1>
+          <h1 className="text-xl font-bold text-gray-900">Join Circle</h1>
         </div>
       </header>
 
@@ -59,8 +59,8 @@ const JoinGroup = () => {
               <div className="bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="h-8 w-8 text-indigo-600" />
               </div>
-              <CardTitle>Join an Existing Group</CardTitle>
-              <p className="text-gray-600">Enter the invite link you received to join a group</p>
+              <CardTitle>Join an Existing Circle</CardTitle>
+              <p className="text-gray-600">Enter the invite link you received to join a circle</p>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -95,9 +95,9 @@ const JoinGroup = () => {
                 <div className="bg-blue-50 p-4 rounded-lg">
                   <h4 className="font-medium text-blue-900 mb-2">What happens next?</h4>
                   <ul className="text-sm text-blue-700 space-y-1">
-                    <li>• You'll be added to the group immediately</li>
-                    <li>• Start logging your interactions with group members</li>
-                    <li>• View your balance and group dynamics</li>
+                    <li>• You'll be added to the circle immediately</li>
+                    <li>• Start logging your interactions with circle members</li>
+                    <li>• View your balance and circle dynamics</li>
                     <li>• Help create a more balanced social environment</li>
                   </ul>
                 </div>
@@ -108,7 +108,7 @@ const JoinGroup = () => {
                   className="w-full bg-indigo-600 hover:bg-indigo-700"
                   size="lg"
                 >
-                  Join Group
+                  Join Circle
                 </Button>
               </form>
             </CardContent>
@@ -122,7 +122,7 @@ const JoinGroup = () => {
               onClick={() => navigate('/create-group')}
               className="bg-white/70 backdrop-blur-sm"
             >
-              Create Your Own Group
+              Create Your Own Circle
             </Button>
           </div>
         </div>

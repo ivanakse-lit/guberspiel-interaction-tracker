@@ -14,7 +14,7 @@ const CreateGroup = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  const [groupName, setGroupName] = useState('');
+  const [circleName, setCircleName] = useState('');
   const [description, setDescription] = useState('');
   const [members, setMembers] = useState<string[]>([]);
   const [newMember, setNewMember] = useState('');
@@ -46,18 +46,18 @@ const CreateGroup = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!groupName.trim()) {
+    if (!circleName.trim()) {
       toast({
-        title: "Group name required",
-        description: "Please enter a name for your group.",
+        title: "Circle name required",
+        description: "Please enter a name for your circle.",
         variant: "destructive"
       });
       return;
     }
 
     toast({
-      title: "Group created!",
-      description: `${groupName} has been created successfully.`,
+      title: "Circle created!",
+      description: `${circleName} has been created successfully.`,
     });
 
     navigate('/dashboard');
@@ -77,7 +77,7 @@ const CreateGroup = () => {
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back
           </Button>
-          <h1 className="text-xl font-bold text-gray-900">Create New Group</h1>
+          <h1 className="text-xl font-bold text-gray-900">Create New Circle</h1>
         </div>
       </header>
 
@@ -87,19 +87,19 @@ const CreateGroup = () => {
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Users className="h-5 w-5 text-indigo-600" />
-                <span>Set Up Your Group</span>
+                <span>Set Up Your Circle</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Group Name */}
+                {/* Circle Name */}
                 <div className="space-y-2">
-                  <Label htmlFor="groupName">Group Name *</Label>
+                  <Label htmlFor="circleName">Circle Name *</Label>
                   <Input
-                    id="groupName"
-                    placeholder="e.g., Flatmates, Study Group, Family"
-                    value={groupName}
-                    onChange={(e) => setGroupName(e.target.value)}
+                    id="circleName"
+                    placeholder="e.g., Flatmates, Study Circle, Family"
+                    value={circleName}
+                    onChange={(e) => setCircleName(e.target.value)}
                     className="bg-white/70"
                   />
                 </div>
@@ -109,7 +109,7 @@ const CreateGroup = () => {
                   <Label htmlFor="description">Description</Label>
                   <Textarea
                     id="description"
-                    placeholder="What's this group for? (optional)"
+                    placeholder="What's this circle for? (optional)"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     className="bg-white/70"
@@ -141,7 +141,7 @@ const CreateGroup = () => {
                   {/* Members List */}
                   {members.length > 0 && (
                     <div className="space-y-2">
-                      <p className="text-sm text-gray-600">Group Members:</p>
+                      <p className="text-sm text-gray-600">Circle Members:</p>
                       <div className="flex flex-wrap gap-2">
                         {members.map((member, index) => (
                           <Badge 
@@ -202,9 +202,9 @@ const CreateGroup = () => {
                 <div className="bg-indigo-50 p-4 rounded-lg">
                   <h4 className="font-medium text-indigo-900 mb-2">How Güberspiel Works</h4>
                   <ul className="text-sm text-indigo-700 space-y-1">
-                    <li>• Track giving and receiving moments in your group</li>
+                    <li>• Track giving and receiving moments in your circle</li>
                     <li>• Each interaction is worth 1-3 points based on significance</li>
-                    <li>• See individual and group balance in real-time</li>
+                    <li>• See individual and circle balance in real-time</li>
                     <li>• Encourage fairness and gratitude in relationships</li>
                   </ul>
                 </div>
@@ -215,7 +215,7 @@ const CreateGroup = () => {
                   className="w-full bg-indigo-600 hover:bg-indigo-700"
                   size="lg"
                 >
-                  Create Group
+                  Create Circle
                 </Button>
               </form>
             </CardContent>

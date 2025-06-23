@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -57,7 +58,7 @@ const Index = () => {
               onClick={() => navigate('/create-group')}
             >
               <Plus className="h-5 w-5 mr-2" />
-              Start Your Journey
+              Create Your Circle
             </Button>
             <Button 
               size="lg" 
