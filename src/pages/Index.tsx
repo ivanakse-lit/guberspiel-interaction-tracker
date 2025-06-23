@@ -18,7 +18,7 @@ const Index = () => {
               <Heart className="h-6 w-6 text-white" />
             </div>
             <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-rose-600 bg-clip-text text-transparent">
-              Balance Your Social Interactions
+              Güberspiel
             </h1>
           </div>
           <Button 
