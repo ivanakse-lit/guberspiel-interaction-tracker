@@ -1,5 +1,4 @@
-
-import { supabase, Circle, CircleMembership } from '@/lib/supabase'
+import { supabase, Circle, CircleMembership } from '@/integrations/supabase/client'
 
 export const createCircle = async (name: string, description: string, memberNames: string[]) => {
   const user = await supabase.auth.getUser()
