@@ -12,6 +12,7 @@ import JoinGroup from "./pages/JoinGroup";
 import GroupHistory from "./pages/GroupHistory";
 import GroupOverview from "./pages/GroupOverview";
 import Analytics from "./pages/Analytics";
+import Changelog from "./pages/Changelog";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/analytics" element={<Analytics />} />
+            <Route path="/changelog" element={<Changelog />} />
             <Route path="/log-interaction" element={<LogInteraction />} />
             <Route path="/create-group" element={<CreateGroup />} />
             <Route path="/join-group" element={<JoinGroup />} />

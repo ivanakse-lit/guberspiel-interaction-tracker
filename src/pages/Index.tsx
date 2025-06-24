@@ -191,6 +191,16 @@ const Index = () => {
           <p className="text-gray-600">Building deeper connections through gratitude</p>
           <Heart className="h-5 w-5 text-rose-400" />
         </div>
+        <div className="flex items-center justify-center space-x-4 mb-4">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => navigate('/changelog')}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            Changelog
+          </Button>
+        </div>
         <p className="text-gray-500 text-sm">&copy; 2024 Güberspiel. Spreading love, one interaction at a time.</p>
       </footer>
     </div>
