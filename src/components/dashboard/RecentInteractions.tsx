@@ -1,12 +1,11 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Heart } from 'lucide-react';
 
 /**
  * Component to display recent interactions/moments of care
- * Currently shows empty state - will be populated with actual interaction data
+ * Shows empty state when no interactions exist
  */
 const RecentInteractions = () => {
   return (
@@ -18,7 +17,7 @@ const RecentInteractions = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Empty state - placeholder for when interaction logging is implemented */}
+        {/* Empty state - will be populated with actual interaction data when implemented */}
         <p className="text-gray-500 text-center py-8">
           No interactions yet. Start sharing moments of care!
         </p>

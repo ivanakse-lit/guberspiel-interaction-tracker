@@ -11,72 +11,15 @@ const GroupHistory = () => {
   const navigate = useNavigate();
   const { groupId } = useParams();
   
-  // Mock data - in real app this would come from API based on groupId
+  // Empty state - will be populated with actual data from API
   const [group] = useState({
-    id: 1,
-    name: 'Flatmates',
-    members: 4,
-    balance: 2
+    id: parseInt(groupId || '1'),
+    name: 'Loading...',
+    members: 0,
+    balance: 0
   });
 
-  const [interactions] = useState([
-    {
-      id: 1,
-      date: '2024-06-23',
-      time: '14:30',
-      type: 'give',
-      description: 'Helped with moving heavy furniture',
-      giver: 'You',
-      recipient: 'Sarah',
-      value: 2,
-      status: 'confirmed'
-    },
-    {
-      id: 2,
-      date: '2024-06-22',
-      time: '19:15',
-      type: 'take',
-      description: 'Borrowed car for weekend trip',
-      giver: 'Mike',
-      recipient: 'You',
-      value: 3,
-      status: 'confirmed'
-    },
-    {
-      id: 3,
-      date: '2024-06-22',
-      time: '12:00',
-      type: 'give',
-      description: 'Cooked dinner for everyone',
-      giver: 'You',
-      recipient: 'Everyone',
-      value: 1,
-      status: 'confirmed'
-    },
-    {
-      id: 4,
-      date: '2024-06-21',
-      time: '16:45',
-      type: 'take',
-      description: 'Help with job interview preparation',
-      giver: 'Sarah',
-      recipient: 'You',
-      value: 2,
-      status: 'confirmed'
-    },
-    {
-      id: 5,
-      date: '2024-06-20',
-      time: '10:30',
-      type: 'give',
-      description: 'Cleaned common areas',
-      giver: 'You',
-      recipient: 'Everyone',
-      value: 1,
-      status: 'confirmed'
-    }
-  ]);
-
+  const [interactions] = useState([]);
   const [filterType, setFilterType] = useState('all');
 
   const filteredInteractions = interactions.filter(interaction => {
@@ -84,8 +27,8 @@ const GroupHistory = () => {
     return interaction.type === filterType;
   });
 
-  const totalGiven = interactions.filter(i => i.type === 'give').reduce((sum, i) => sum + i.value, 0);
-  const totalReceived = interactions.filter(i => i.type === 'take').reduce((sum, i) => sum + i.value, 0);
+  const totalGiven = 0;
+  const totalReceived = 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -204,51 +147,58 @@ const GroupHistory = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Date & Time</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Participants</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead className="text-right">Value</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredInteractions.map((interaction) => (
-                  <TableRow key={interaction.id} className="hover:bg-white/50">
-                    <TableCell>
-                      <div className="text-sm">
-                        <div className="font-medium">{interaction.date}</div>
-                        <div className="text-gray-500">{interaction.time}</div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="font-medium text-gray-900">{interaction.description}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-sm">
-                        <div><span className="text-gray-600">From:</span> {interaction.giver}</div>
-                        <div><span className="text-gray-600">To:</span> {interaction.recipient}</div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge 
-                        variant={interaction.type === 'give' ? 'default' : 'secondary'}
-                        className={interaction.type === 'give' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}
-                      >
-                        {interaction.type === 'give' ? 'Given' : 'Received'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <span className={`font-bold ${interaction.type === 'give' ? 'text-green-600' : 'text-blue-600'}`}>
-                        {interaction.type === 'give' ? '+' : '-'}{interaction.value}
-                      </span>
-                    </TableCell>
+            {interactions.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-gray-500">No interactions recorded yet.</p>
+                <p className="text-sm text-gray-400 mt-2">Start logging moments of care to see them here.</p>
+              </div>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Date & Time</TableHead>
+                    <TableHead>Description</TableHead>
+                    <TableHead>Participants</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead className="text-right">Value</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {filteredInteractions.map((interaction) => (
+                    <TableRow key={interaction.id} className="hover:bg-white/50">
+                      <TableCell>
+                        <div className="text-sm">
+                          <div className="font-medium">{interaction.date}</div>
+                          <div className="text-gray-500">{interaction.time}</div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="font-medium text-gray-900">{interaction.description}</div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-sm">
+                          <div><span className="text-gray-600">From:</span> {interaction.giver}</div>
+                          <div><span className="text-gray-600">To:</span> {interaction.recipient}</div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge 
+                          variant={interaction.type === 'give' ? 'default' : 'secondary'}
+                          className={interaction.type === 'give' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}
+                        >
+                          {interaction.type === 'give' ? 'Given' : 'Received'}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <span className={`font-bold ${interaction.type === 'give' ? 'text-green-600' : 'text-blue-600'}`}>
+                          {interaction.type === 'give' ? '+' : '-'}{interaction.value}
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
           </CardContent>
         </Card>
       </div>

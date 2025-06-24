@@ -11,65 +11,28 @@ const GroupOverview = () => {
   const navigate = useNavigate();
   const { groupId } = useParams();
   
-  // Mock data - in real app this would come from API based on groupId
+  // Empty state - will be populated with actual data from API
   const [group] = useState({
-    id: 1,
-    name: 'Flatmates',
-    members: 4,
-    totalInteractions: 24,
-    totalValue: 18
+    id: parseInt(groupId || '1'),
+    name: 'Loading...',
+    members: 0,
+    totalInteractions: 0,
+    totalValue: 0
   });
 
-  const [memberStats] = useState([
-    {
-      id: 1,
-      name: 'You',
-      given: 8,
-      received: 6,
-      balance: 2,
-      totalInteractions: 12,
-      isCurrentUser: true
-    },
-    {
-      id: 2,
-      name: 'Sarah',
-      given: 5,
-      received: 7,
-      balance: -2,
-      totalInteractions: 8,
-      isCurrentUser: false
-    },
-    {
-      id: 3,
-      name: 'Mike',
-      given: 3,
-      received: 4,
-      balance: -1,
-      totalInteractions: 6,
-      isCurrentUser: false
-    },
-    {
-      id: 4,
-      name: 'Alex',
-      given: 2,
-      received: 1,
-      balance: 1,
-      totalInteractions: 4,
-      isCurrentUser: false
-    }
-  ]);
+  const [memberStats] = useState([]);
 
   // Sort members by balance (highest to lowest)
   const sortedMembers = [...memberStats].sort((a, b) => b.balance - a.balance);
-  const currentUserRank = sortedMembers.findIndex(member => member.isCurrentUser) + 1;
+  const currentUserRank = sortedMembers.findIndex(member => member.isCurrentUser) + 1 || 1;
 
-  const mostActiveGiver = memberStats.reduce((prev, current) => 
+  const mostActiveGiver = memberStats.length > 0 ? memberStats.reduce((prev, current) => 
     prev.given > current.given ? prev : current
-  );
+  ) : null;
 
-  const mostActiveReceiver = memberStats.reduce((prev, current) => 
+  const mostActiveReceiver = memberStats.length > 0 ? memberStats.reduce((prev, current) => 
     prev.received > current.received ? prev : current
-  );
+  ) : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -140,8 +103,8 @@ const GroupOverview = () => {
               <CardTitle className="text-sm font-medium text-gray-600">Top Giver</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-lg font-bold text-green-600">{mostActiveGiver.name}</div>
-              <p className="text-xs text-gray-500">+{mostActiveGiver.given} given</p>
+              <div className="text-lg font-bold text-green-600">{mostActiveGiver?.name || 'N/A'}</div>
+              <p className="text-xs text-gray-500">+{mostActiveGiver?.given || 0} given</p>
             </CardContent>
           </Card>
 
@@ -150,8 +113,8 @@ const GroupOverview = () => {
               <CardTitle className="text-sm font-medium text-gray-600">Most Supported</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-lg font-bold text-blue-600">{mostActiveReceiver.name}</div>
-              <p className="text-xs text-gray-500">+{mostActiveReceiver.received} received</p>
+              <div className="text-lg font-bold text-blue-600">{mostActiveReceiver?.name || 'N/A'}</div>
+              <p className="text-xs text-gray-500">+{mostActiveReceiver?.received || 0} received</p>
             </CardContent>
           </Card>
         </div>
@@ -166,115 +129,124 @@ const GroupOverview = () => {
             <p className="text-gray-600 text-sm">See how all members are performing in this group</p>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Rank</TableHead>
-                  <TableHead>Member</TableHead>
-                  <TableHead className="text-center">Given</TableHead>
-                  <TableHead className="text-center">Received</TableHead>
-                  <TableHead className="text-center">Balance</TableHead>
-                  <TableHead className="text-center">Activity</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {sortedMembers.map((member, index) => (
-                  <TableRow 
-                    key={member.id} 
-                    className={`hover:bg-white/50 ${member.isCurrentUser ? 'bg-indigo-50/70' : ''}`}
-                  >
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <span className="font-bold text-lg">#{index + 1}</span>
-                        {index === 0 && <Trophy className="h-4 w-4 text-yellow-500" />}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <span className={`font-medium ${member.isCurrentUser ? 'text-indigo-700' : 'text-gray-900'}`}>
-                          {member.name}
-                        </span>
-                        {member.isCurrentUser && (
-                          <Badge variant="outline" className="text-xs bg-indigo-100 text-indigo-700">
-                            You
-                          </Badge>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <div className="flex items-center justify-center space-x-1">
-                        <TrendingUp className="h-4 w-4 text-green-600" />
-                        <span className="font-bold text-green-600">+{member.given}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <div className="flex items-center justify-center space-x-1">
-                        <TrendingDown className="h-4 w-4 text-blue-600" />
-                        <span className="font-bold text-blue-600">+{member.received}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <span className={`font-bold text-lg ${member.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                        {member.balance >= 0 ? '+' : ''}{member.balance}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <div className="text-sm">
-                        <div className="font-medium text-gray-900">{member.totalInteractions}</div>
-                        <div className="text-xs text-gray-500">interactions</div>
-                      </div>
-                    </TableCell>
+            {memberStats.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-gray-500">No member data available yet.</p>
+                <p className="text-sm text-gray-400 mt-2">Members will appear here once interactions are logged.</p>
+              </div>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Rank</TableHead>
+                    <TableHead>Member</TableHead>
+                    <TableHead className="text-center">Given</TableHead>
+                    <TableHead className="text-center">Received</TableHead>
+                    <TableHead className="text-center">Balance</TableHead>
+                    <TableHead className="text-center">Activity</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {sortedMembers.map((member, index) => (
+                    <TableRow 
+                      key={member.id} 
+                      className={`hover:bg-white/50 ${member.isCurrentUser ? 'bg-indigo-50/70' : ''}`}
+                    >
+                      <TableCell>
+                        <div className="flex items-center space-x-2">
+                          <span className="font-bold text-lg">#{index + 1}</span>
+                          {index === 0 && <Trophy className="h-4 w-4 text-yellow-500" />}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center space-x-2">
+                          <span className={`font-medium ${member.isCurrentUser ? 'text-indigo-700' : 'text-gray-900'}`}>
+                            {member.name}
+                          </span>
+                          {member.isCurrentUser && (
+                            <Badge variant="outline" className="text-xs bg-indigo-100 text-indigo-700">
+                              You
+                            </Badge>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <div className="flex items-center justify-center space-x-1">
+                          <TrendingUp className="h-4 w-4 text-green-600" />
+                          <span className="font-bold text-green-600">+{member.given}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <div className="flex items-center justify-center space-x-1">
+                          <TrendingDown className="h-4 w-4 text-blue-600" />
+                          <span className="font-bold text-blue-600">+{member.received}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <span className={`font-bold text-lg ${member.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          {member.balance >= 0 ? '+' : ''}{member.balance}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-center">
+                        <div className="text-sm">
+                          <div className="font-medium text-gray-900">{member.totalInteractions}</div>
+                          <div className="text-xs text-gray-500">interactions</div>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
           </CardContent>
         </Card>
 
         {/* Your Position Analysis */}
-        <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg mt-8">
-          <CardHeader>
-            <CardTitle className="text-indigo-700">Your Position Analysis</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <h4 className="font-medium text-gray-900">Performance Summary</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Your rank:</span>
-                    <span className="font-medium">#{currentUserRank} out of {group.members}</span>
+        {memberStats.length > 0 && (
+          <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg mt-8">
+            <CardHeader>
+              <CardTitle className="text-indigo-700">Your Position Analysis</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h4 className="font-medium text-gray-900">Performance Summary</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Your rank:</span>
+                      <span className="font-medium">#{currentUserRank} out of {group.members}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Balance compared to average:</span>
+                      <span className={`font-medium ${memberStats.find(m => m.isCurrentUser)?.balance && memberStats.find(m => m.isCurrentUser)!.balance > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        {memberStats.find(m => m.isCurrentUser)?.balance && memberStats.find(m => m.isCurrentUser)!.balance > 0 ? 'Above' : 'Below'} average
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Activity level:</span>
+                      <span className="font-medium">
+                        {((memberStats.find(m => m.isCurrentUser)?.totalInteractions || 0) / group.totalInteractions * 100).toFixed(0)}% of total
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Balance compared to average:</span>
-                    <span className={`font-medium ${memberStats.find(m => m.isCurrentUser)?.balance && memberStats.find(m => m.isCurrentUser)!.balance > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      {memberStats.find(m => m.isCurrentUser)?.balance && memberStats.find(m => m.isCurrentUser)!.balance > 0 ? 'Above' : 'Below'} average
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Activity level:</span>
-                    <span className="font-medium">
-                      {((memberStats.find(m => m.isCurrentUser)?.totalInteractions || 0) / group.totalInteractions * 100).toFixed(0)}% of total
-                    </span>
+                </div>
+                <div className="space-y-4">
+                  <h4 className="font-medium text-gray-900">Recommendations</h4>
+                  <div className="text-sm text-gray-700 space-y-1">
+                    {currentUserRank === 1 ? (
+                      <p className="text-green-600">🎉 You're the top contributor! Keep up the great work.</p>
+                    ) : currentUserRank <= group.members / 2 ? (
+                      <p>👍 You're performing well in this group.</p>
+                    ) : (
+                      <p className="text-orange-600">💡 Consider contributing more to improve your balance.</p>
+                    )}
+                    <p>You've been involved in {((memberStats.find(m => m.isCurrentUser)?.totalInteractions || 0) / group.totalInteractions * 100).toFixed(0)}% of group interactions.</p>
                   </div>
                 </div>
               </div>
-              <div className="space-y-4">
-                <h4 className="font-medium text-gray-900">Recommendations</h4>
-                <div className="text-sm text-gray-700 space-y-1">
-                  {currentUserRank === 1 ? (
-                    <p className="text-green-600">🎉 You're the top contributor! Keep up the great work.</p>
-                  ) : currentUserRank <= group.members / 2 ? (
-                    <p>👍 You're performing well in this group.</p>
-                  ) : (
-                    <p className="text-orange-600">💡 Consider contributing more to improve your balance.</p>
-                  )}
-                  <p>You've been involved in {((memberStats.find(m => m.isCurrentUser)?.totalInteractions || 0) / group.totalInteractions * 100).toFixed(0)}% of group interactions.</p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
