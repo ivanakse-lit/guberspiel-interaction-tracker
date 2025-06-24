@@ -1,0 +1,26 @@
+
+version: '3.8'
+
+services:
+  gratitudecoin-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    container_name: gratitudecoin-app
+    
+  # Optional: Add nginx proxy if you need SSL/custom domain
+  # nginx-proxy:
+  #   image: nginx:alpine
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx-proxy.conf:/etc/nginx/nginx.conf
+  #   depends_on:
+  #     - gratitudecoin-app
+  #   restart: unless-stopped
