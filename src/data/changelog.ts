@@ -3,6 +3,17 @@ import { ChangelogEntry } from '@/types/changelog';
 
 export const changelogEntries: ChangelogEntry[] = [
   {
+    version: "1.1.0",
+    date: "2024-06-24",
+    type: "minor",
+    changes: {
+      added: [
+        "Google OAuth authentication for one-click sign-in",
+        "Social login integration alongside email/password authentication"
+      ]
+    }
+  },
+  {
     version: "1.0.0",
     date: "2024-06-24",
     type: "major",

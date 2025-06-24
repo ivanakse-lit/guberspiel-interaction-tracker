@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart, HandHeart, Users, Plus, Smile, Trophy, Gift } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { changelogEntries } from '@/data/changelog';
 
 /**
  * Landing page component for Güberspiel
@@ -11,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
  */
 const Index = () => {
   const navigate = useNavigate();
+  const currentVersion = changelogEntries[0]?.version || '1.0.0';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
@@ -202,6 +204,7 @@ const Index = () => {
           </Button>
         </div>
         <p className="text-gray-500 text-sm">&copy; 2024 Güberspiel. Spreading love, one interaction at a time.</p>
+        <p className="text-gray-400 text-xs mt-2">Version {currentVersion}</p>
       </footer>
     </div>
   );
