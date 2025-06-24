@@ -114,11 +114,11 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      user_is_circle_creator: {
+      is_circle_creator: {
         Args: { circle_id: number }
         Returns: boolean
       }
-      user_is_circle_member: {
+      is_circle_member: {
         Args: { circle_id: number }
         Returns: boolean
       }
