@@ -60,8 +60,9 @@ GratitudeCoin applies Pine & Gilmore's **Experience Economy** principles to tran
 ### Prerequisites
 - Node.js (v18 or higher)
 - npm or yarn package manager
+- Docker and Docker Compose (for containerized deployment)
 
-### Installation
+### Local Development
 
 1. Clone the repository:
 ```bash
@@ -80,6 +81,71 @@ npm run dev
 ```
 
 4. Open [http://localhost:5173](http://localhost:5173) in your browser
+
+### 🐳 Docker Deployment
+
+#### Development with Docker
+
+1. Build and run the application:
+```bash
+docker-compose up --build
+```
+
+2. Access the application at [http://localhost:3000](http://localhost:3000)
+
+3. To run in detached mode:
+```bash
+docker-compose up -d --build
+```
+
+4. To stop the containers:
+```bash
+docker-compose down
+```
+
+#### Production Deployment
+
+1. Use the production Docker Compose configuration:
+```bash
+docker-compose -f docker-compose.prod.yml up -d --build
+```
+
+2. The application will be available at [http://localhost](http://localhost) (port 80)
+
+3. To view logs:
+```bash
+docker-compose -f docker-compose.prod.yml logs -f
+```
+
+4. To stop the production deployment:
+```bash
+docker-compose -f docker-compose.prod.yml down
+```
+
+#### Docker Configuration Details
+
+- **Multi-stage build**: Uses Node.js for building and Nginx for serving
+- **Optimized images**: Alpine Linux base images for smaller size
+- **Health checks**: Automatic health monitoring in production
+- **Static asset caching**: 1-year cache for static files
+- **Gzip compression**: Enabled for better performance
+- **Security headers**: XSS protection, content type sniffing prevention
+- **SPA routing**: Proper handling of client-side React Router routes
+
+#### Environment Variables
+
+The Docker containers support the following environment variables:
+
+- `NODE_ENV`: Set to `production` for optimized builds
+- Custom Supabase configuration can be added as needed
+
+#### Docker Files Overview
+
+- `Dockerfile`: Multi-stage build configuration
+- `docker-compose.yml`: Development deployment (port 3000)
+- `docker-compose.prod.yml`: Production deployment (port 80)
+- `nginx.conf`: Nginx configuration for serving the React app
+- `.dockerignore`: Excludes unnecessary files from Docker context
 
 ## 🛠 Tech Stack
 
@@ -199,4 +265,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 *GratitudeCoin - Where every act of kindness counts and every relationship grows* ✨
-
