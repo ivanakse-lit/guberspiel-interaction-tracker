@@ -2,8 +2,9 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Heart, HandHeart, Users, Plus, Smile, Trophy, Gift } from 'lucide-react';
+import { Heart, HandHeart, Users, Plus, Smile, Trophy, Gift, User, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 import { changelogEntries } from '@/data/changelog';
 
 /**
@@ -12,11 +13,20 @@ import { changelogEntries } from '@/data/changelog';
  */
 const Index = () => {
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const currentVersion = changelogEntries[0]?.version || '1.0.0';
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
-      {/* Header with logo and dashboard navigation */}
+      {/* Header with logo and user status */}
       <header className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-between">
           {/* Brand logo and name */}
@@ -28,14 +38,43 @@ const Index = () => {
               Güberspiel
             </h1>
           </div>
-          {/* Dashboard access button */}
-          <Button 
-            variant="outline" 
-            onClick={() => navigate('/dashboard')}
-            className="bg-white/80 backdrop-blur-sm border-orange-200 hover:bg-orange-50 text-orange-700"
-          >
-            Dashboard
-          </Button>
+          
+          {/* User status and navigation */}
+          <div className="flex items-center space-x-3">
+            {user ? (
+              <>
+                <div className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 border border-orange-200">
+                  <User className="h-4 w-4 text-orange-600" />
+                  <span className="text-sm font-medium text-gray-700">
+                    Welcome, {user.user_metadata?.name || user.email?.split('@')[0] || 'Friend'}!
+                  </span>
+                </div>
+                <Button 
+                  onClick={() => navigate('/dashboard')}
+                  className="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600"
+                >
+                  Dashboard
+                </Button>
+                <Button 
+                  onClick={handleSignOut}
+                  variant="outline"
+                  size="sm"
+                  className="bg-white/80 backdrop-blur-sm border-orange-200 hover:bg-orange-50"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <Button 
+                variant="outline" 
+                onClick={() => navigate('/auth')}
+                className="bg-white/80 backdrop-blur-sm border-orange-200 hover:bg-orange-50 text-orange-700"
+              >
+                Sign In
+              </Button>
+            )}
+          </div>
         </div>
       </header>
 
@@ -66,10 +105,10 @@ const Index = () => {
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-              onClick={() => navigate('/create-group')}
+              onClick={() => user ? navigate('/create-group') : navigate('/auth')}
             >
               <Plus className="h-5 w-5 mr-2" />
-              Create Your Circle
+              {user ? 'Create Your Circle' : 'Get Started'}
             </Button>
           </div>
           
