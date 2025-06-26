@@ -2,18 +2,16 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { ArrowLeft, Plus, Minus, Users, Calendar as CalendarIcon } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
-import { cn } from '@/lib/utils';
+import InteractionTypeSelector from '@/components/log-interaction/InteractionTypeSelector';
+import DateSelector from '@/components/log-interaction/DateSelector';
+import InteractionForm from '@/components/log-interaction/InteractionForm';
+import GroupSelector from '@/components/log-interaction/GroupSelector';
+import PeopleSelector from '@/components/log-interaction/PeopleSelector';
+import ValueSelector from '@/components/log-interaction/ValueSelector';
 
 const LogInteraction = () => {
   const navigate = useNavigate();
@@ -42,16 +40,6 @@ const LogInteraction = () => {
     { id: 'mom', name: 'Mom', group: 'family' },
     { id: 'dad', name: 'Dad', group: 'family' },
   ];
-
-  const filteredPeople = selectedGroup ? people.filter(p => p.group === selectedGroup) : [];
-
-  const togglePerson = (personId: string) => {
-    setSelectedPeople(prev => 
-      prev.includes(personId) 
-        ? prev.filter(p => p !== personId)
-        : [...prev, personId]
-    );
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,165 +86,42 @@ const LogInteraction = () => {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Interaction Type */}
-                <div className="space-y-3">
-                  <Label className="text-base font-medium">Type of Interaction</Label>
-                  <div className="grid grid-cols-2 gap-4">
-                    <Button
-                      type="button"
-                      variant={interactionType === 'give' ? 'default' : 'outline'}
-                      className={`h-20 flex-col ${interactionType === 'give' ? 'bg-green-600 hover:bg-green-700' : 'bg-white/70'}`}
-                      onClick={() => setInteractionType('give')}
-                    >
-                      <Plus className="h-6 w-6 mb-2" />
-                      I Gave
-                    </Button>
-                    <Button
-                      type="button"
-                      variant={interactionType === 'take' ? 'default' : 'outline'}
-                      className={`h-20 flex-col ${interactionType === 'take' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-white/70'}`}
-                      onClick={() => setInteractionType('take')}
-                    >
-                      <Minus className="h-6 w-6 mb-2" />
-                      I Received
-                    </Button>
-                  </div>
-                </div>
+                <InteractionTypeSelector 
+                  interactionType={interactionType}
+                  setInteractionType={setInteractionType}
+                />
 
-                {/* Date Selection */}
-                <div className="space-y-2">
-                  <Label>When did this happen? *</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start text-left font-normal bg-white/70",
-                          !interactionDate && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {interactionDate ? format(interactionDate, "PPP") : <span>Pick a date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={interactionDate}
-                        onSelect={(date) => date && setInteractionDate(date)}
-                        disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <p className="text-sm text-gray-600">
-                    You can backdate this interaction if it happened earlier
-                  </p>
-                </div>
+                <DateSelector 
+                  interactionDate={interactionDate}
+                  setInteractionDate={setInteractionDate}
+                />
 
-                {/* Title */}
-                <div className="space-y-2">
-                  <Label htmlFor="title">Title *</Label>
-                  <Input
-                    id="title"
-                    placeholder="e.g., Helped with moving, Emotional support, Made dinner"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="bg-white/70"
-                  />
-                </div>
+                <InteractionForm 
+                  title={title}
+                  setTitle={setTitle}
+                  description={description}
+                  setDescription={setDescription}
+                />
 
-                {/* Description */}
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    placeholder="Add more details about this interaction..."
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    className="bg-white/70"
-                    rows={3}
-                  />
-                </div>
+                <GroupSelector 
+                  selectedGroup={selectedGroup}
+                  setSelectedGroup={setSelectedGroup}
+                  groups={groups}
+                />
 
-                {/* Group Selection */}
-                <div className="space-y-2">
-                  <Label>Group *</Label>
-                  <Select value={selectedGroup} onValueChange={setSelectedGroup}>
-                    <SelectTrigger className="bg-white/70">
-                      <SelectValue placeholder="Select a group" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {groups.map((group) => (
-                        <SelectItem key={group.id} value={group.id}>
-                          {group.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <PeopleSelector 
+                  selectedGroup={selectedGroup}
+                  selectedPeople={selectedPeople}
+                  setSelectedPeople={setSelectedPeople}
+                  people={people}
+                  interactionType={interactionType}
+                />
 
-                {/* People Selection */}
-                {selectedGroup && (
-                  <div className="space-y-2">
-                    <Label>
-                      {interactionType === 'give' ? 'Who received?' : 'Who gave?'} *
-                    </Label>
-                    <div className="space-y-2">
-                      {filteredPeople.map((person) => (
-                        <div
-                          key={person.id}
-                          onClick={() => togglePerson(person.id)}
-                          className={`p-3 rounded-lg border cursor-pointer transition-colors ${
-                            selectedPeople.includes(person.id)
-                              ? 'bg-indigo-100 border-indigo-300'
-                              : 'bg-white/70 border-gray-200 hover:bg-white/90'
-                          }`}
-                        >
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{person.name}</span>
-                            {selectedPeople.includes(person.id) && (
-                              <Badge className="bg-indigo-600">Selected</Badge>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <ValueSelector 
+                  value={value}
+                  setValue={setValue}
+                />
 
-                {/* Value */}
-                <div className="space-y-2">
-                  <Label>Value (Points)</Label>
-                  <div className="flex items-center space-x-4">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setValue(Math.max(1, value - 1))}
-                      className="bg-white/70"
-                    >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="text-2xl font-bold text-indigo-600 min-w-[3rem] text-center">
-                      {value}
-                    </span>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setValue(value + 1)}
-                      className="bg-white/70"
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    1 = Small favor, 2 = Significant help, 3+ = Major support
-                  </p>
-                </div>
-
-                {/* Submit */}
                 <Button 
                   type="submit" 
                   className="w-full bg-indigo-600 hover:bg-indigo-700"
