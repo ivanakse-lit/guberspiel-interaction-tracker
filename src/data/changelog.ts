@@ -3,6 +3,22 @@ import { ChangelogEntry } from '@/types/changelog';
 
 export const changelogEntries: ChangelogEntry[] = [
   {
+    version: "1.2.1",
+    date: "2024-06-26",
+    type: "patch",
+    changes: {
+      added: [
+        "User authentication status indicator in header showing welcome message with user name",
+        "Dynamic navigation buttons based on authentication state (Dashboard/Sign Out for logged users, Sign In for guests)",
+        "Improved user experience with clear visual feedback of login status"
+      ],
+      changed: [
+        "Main call-to-action button text changes based on authentication state",
+        "Header layout enhanced to accommodate user status information"
+      ]
+    }
+  },
+  {
     version: "1.2.0",
     date: "2024-06-26",
     type: "minor",
