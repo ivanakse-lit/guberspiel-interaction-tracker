@@ -25,6 +25,7 @@ export const useAuthActions = () => {
       }
 
       if (result.error) {
+        console.error('Email auth error:', result.error)
         toast({
           title: 'Error',
           description: result.error.message,
@@ -41,6 +42,7 @@ export const useAuthActions = () => {
         return true
       }
     } catch (error) {
+      console.error('Email auth unexpected error:', error)
       toast({
         title: 'Error',
         description: 'An unexpected error occurred',
@@ -54,10 +56,20 @@ export const useAuthActions = () => {
 
   const handleGoogleAuth = async () => {
     setGoogleLoading(true)
+    console.log('Starting Google authentication...')
+    
     try {
       const { error } = await signInWithGoogle()
+      console.log('Google auth result:', { error })
+      
       if (error) {
-        // Check if it's the provider not enabled error
+        console.error('Google auth error details:', {
+          message: error.message,
+          status: error.status,
+          details: error
+        })
+        
+        // Check for specific error types
         if (error.message?.includes('provider is not enabled') || 
             error.message?.includes('Unsupported provider')) {
           toast({
@@ -65,17 +77,27 @@ export const useAuthActions = () => {
             description: 'Google OAuth is not configured. Please use email/password or contact support.',
             variant: 'destructive'
           })
+        } else if (error.message?.includes('redirect') || 
+                   error.message?.includes('unauthorized')) {
+          toast({
+            title: 'Configuration Error',
+            description: 'Google OAuth configuration issue. Please contact support.',
+            variant: 'destructive'
+          })
         } else {
           toast({
-            title: 'Error',
-            description: error.message,
+            title: 'Google Sign-In Error',
+            description: error.message || 'Failed to sign in with Google',
             variant: 'destructive'
           })
         }
         return false
       }
+      
+      console.log('Google auth initiated successfully')
       return true
     } catch (error) {
+      console.error('Google auth unexpected error:', error)
       toast({
         title: 'Error',
         description: 'Failed to sign in with Google',
