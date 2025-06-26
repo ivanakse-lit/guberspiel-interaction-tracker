@@ -1,11 +1,11 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart, HandHeart, Users, Plus, Smile, Trophy, Gift, User, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { changelogEntries } from '@/data/changelog';
+import AuthModal from '@/components/AuthModal';
 
 /**
  * Landing page component for Güberspiel
@@ -14,6 +14,7 @@ import { changelogEntries } from '@/data/changelog';
 const Index = () => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const currentVersion = changelogEntries[0]?.version || '1.0.0';
 
   const handleSignOut = async () => {
@@ -21,6 +22,14 @@ const Index = () => {
       await signOut();
     } catch (error) {
       console.error('Error signing out:', error);
+    }
+  };
+
+  const handleAuthAction = () => {
+    if (user) {
+      navigate('/create-group');
+    } else {
+      setShowAuthModal(true);
     }
   };
 
@@ -68,7 +77,7 @@ const Index = () => {
             ) : (
               <Button 
                 variant="outline" 
-                onClick={() => navigate('/auth')}
+                onClick={() => setShowAuthModal(true)}
                 className="bg-white/80 backdrop-blur-sm border-orange-200 hover:bg-orange-50 text-orange-700"
               >
                 Sign In
@@ -105,7 +114,7 @@ const Index = () => {
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-              onClick={() => user ? navigate('/create-group') : navigate('/auth')}
+              onClick={handleAuthAction}
             >
               <Plus className="h-5 w-5 mr-2" />
               {user ? 'Create Your Circle' : 'Get Started'}
@@ -245,6 +254,9 @@ const Index = () => {
         <p className="text-gray-500 text-sm">&copy; 2024 Güberspiel. Spreading love, one interaction at a time.</p>
         <p className="text-gray-400 text-xs mt-2">Version {currentVersion}</p>
       </footer>
+
+      {/* Auth Modal */}
+      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
     </div>
   );
 };
