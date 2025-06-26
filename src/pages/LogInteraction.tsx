@@ -7,9 +7,13 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Plus, Minus, Users } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ArrowLeft, Plus, Minus, Users, Calendar as CalendarIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 const LogInteraction = () => {
   const navigate = useNavigate();
@@ -21,6 +25,7 @@ const LogInteraction = () => {
   const [selectedGroup, setSelectedGroup] = useState('');
   const [selectedPeople, setSelectedPeople] = useState<string[]>([]);
   const [value, setValue] = useState(1);
+  const [interactionDate, setInteractionDate] = useState<Date>(new Date());
 
   // Mock data
   const groups = [
@@ -61,7 +66,7 @@ const LogInteraction = () => {
 
     toast({
       title: "Interaction logged!",
-      description: `Successfully recorded your ${interactionType} interaction.`,
+      description: `Successfully recorded your ${interactionType} interaction on ${format(interactionDate, 'PPP')}.`,
     });
 
     navigate('/dashboard');
@@ -116,6 +121,37 @@ const LogInteraction = () => {
                       I Received
                     </Button>
                   </div>
+                </div>
+
+                {/* Date Selection */}
+                <div className="space-y-2">
+                  <Label>When did this happen? *</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-full justify-start text-left font-normal bg-white/70",
+                          !interactionDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {interactionDate ? format(interactionDate, "PPP") : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={interactionDate}
+                        onSelect={(date) => date && setInteractionDate(date)}
+                        disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <p className="text-sm text-gray-600">
+                    You can backdate this interaction if it happened earlier
+                  </p>
                 </div>
 
                 {/* Title */}

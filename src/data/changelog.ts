@@ -3,6 +3,20 @@ import { ChangelogEntry } from '@/types/changelog';
 
 export const changelogEntries: ChangelogEntry[] = [
   {
+    version: "1.2.0",
+    date: "2024-06-26",
+    type: "minor",
+    changes: {
+      added: [
+        "Backdate interactions feature - log moments of kindness with their actual occurrence date",
+        "Comprehensive interaction history with detailed timeline tracking",
+        "Enhanced recent interactions display showing both occurrence and logging timestamps",
+        "New History tab in dashboard for complete interaction timeline",
+        "Date picker for selecting when interactions actually happened"
+      ]
+    }
+  },
+  {
     version: "1.1.0",
     date: "2024-06-24",
     type: "minor",

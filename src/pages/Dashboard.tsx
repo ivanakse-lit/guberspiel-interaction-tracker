@@ -10,6 +10,7 @@ import BalanceOverview from '@/components/dashboard/BalanceOverview';
 import RecentInteractions from '@/components/dashboard/RecentInteractions';
 import CirclesList from '@/components/dashboard/CirclesList';
 import BalanceByCircle from '@/components/dashboard/BalanceByCircle';
+import InteractionHistory from '@/components/dashboard/InteractionHistory';
 
 // Type definitions for data structures
 interface Circle {
@@ -105,6 +106,9 @@ const Dashboard = () => {
             <TabsTrigger value="overview" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-100 data-[state=active]:to-rose-100">
               Overview
             </TabsTrigger>
+            <TabsTrigger value="history" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-100 data-[state=active]:to-rose-100">
+              History
+            </TabsTrigger>
             <TabsTrigger value="by-group" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-100 data-[state=active]:to-rose-100">
               Balance by Circle
             </TabsTrigger>
@@ -116,6 +120,11 @@ const Dashboard = () => {
               <RecentInteractions />
               <CirclesList userCircles={userCircles} />
             </div>
+          </TabsContent>
+
+          {/* History tab: Detailed interaction history */}
+          <TabsContent value="history" className="space-y-6">
+            <InteractionHistory />
           </TabsContent>
 
           {/* Balance by circle tab: Detailed balance breakdown */}
