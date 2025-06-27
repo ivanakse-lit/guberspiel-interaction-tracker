@@ -1,24 +1,20 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = 'https://jqebudjmyxhtsamrzkfm.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZWJ1ZGpteXhodHNhbXJ6a2ZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3MTA0ODksImV4cCI6MjA2NjI4NjQ4OX0.7IX42S5KutsOPa2sGfzvLuXVmvX1rcuOy7vA84kY-Kg'
 
 console.log('Supabase URL:', supabaseUrl)
 console.log('Supabase Anon Key:', supabaseAnonKey ? 'Present' : 'Missing')
-console.log('All env vars:', import.meta.env)
 
-if (!supabaseUrl) {
-  console.error('VITE_SUPABASE_URL is missing. Please check your environment variables.')
-  throw new Error('Missing VITE_SUPABASE_URL environment variable')
-}
-
-if (!supabaseAnonKey) {
-  console.error('VITE_SUPABASE_ANON_KEY is missing. Please check your environment variables.')
-  throw new Error('Missing VITE_SUPABASE_ANON_KEY environment variable')
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    storage: localStorage,
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true
+  }
+})
 
 // Test the connection
 supabase.auth.getSession().then(({ data, error }) => {
