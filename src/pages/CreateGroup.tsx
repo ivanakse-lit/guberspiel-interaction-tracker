@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -82,7 +83,7 @@ const CreateGroup = () => {
         
         if (emailMembers.length > 0) {
           const emailPromises = emailMembers.map(email => 
-            sendInvitationEmail(email, circle.id, inviteCode)
+            sendInvitationEmail(email, circle.id.toString(), inviteCode)
           );
           
           try {
