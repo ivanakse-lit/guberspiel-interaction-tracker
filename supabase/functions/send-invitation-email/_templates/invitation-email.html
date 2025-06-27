@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You've been invited to join {{ .CircleName }} on Guberspiel</title>
+</head>
+<body style="background-color: #fefbf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0;">
+  <div style="margin: 0 auto; padding: 20px; max-width: 600px;">
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 32px; padding: 24px; background-color: #ffffff; border-radius: 12px; border: 1px solid #f4e4bc;">
+      <h1 style="color: #c2410c; font-size: 32px; font-weight: bold; margin: 0 0 8px 0;">🎯 Guberspiel</h1>
+      <p style="color: #92400e; font-size: 16px; margin: 0; font-weight: 500;">Track Meaningful Social Interactions</p>
+    </div>
+    
+    <!-- Content -->
+    <div style="background-color: #ffffff; padding: 32px; border-radius: 12px; border: 1px solid #f4e4bc; margin-bottom: 24px;">
+      <h2 style="color: #451a03; font-size: 24px; font-weight: bold; margin: 0 0 16px 0;">You're Invited to Join a Circle!</h2>
+      
+      <p style="color: #451a03; font-size: 16px; line-height: 1.6; margin: 0 0 16px 0;">
+        <strong>{{ .InviterName }}</strong> has invited you to join <strong>{{ .CircleName }}</strong> on Guberspiel.
+      </p>
+      
+      {{ if .CircleDescription }}
+      <p style="color: #451a03; font-size: 16px; line-height: 1.6; margin: 0 0 16px 0;">
+        <strong>About this circle:</strong> {{ .CircleDescription }}
+      </p>
+      {{ end }}
+      
+      <p style="color: #451a03; font-size: 16px; line-height: 1.6; margin: 0 0 16px 0;">
+        Guberspiel helps you track and celebrate meaningful interactions within your social circles. 
+        Join to start logging acts of kindness, support, and positive moments with your friends and family.
+      </p>
+      
+      <!-- Join Button -->
+      <div style="text-align: center; margin: 32px 0;">
+        <a href="{{ .InviteURL }}" style="background-color: #c2410c; color: #ffffff; font-size: 16px; font-weight: bold; text-decoration: none; padding: 14px 28px; border-radius: 8px; display: inline-block; box-shadow: 0 4px 6px rgba(194, 65, 12, 0.2);">
+          Join {{ .CircleName }}
+        </a>
+      </div>
+      
+      <p style="color: #92400e; font-size: 14px; line-height: 1.5; margin: 24px 0 8px 0;">
+        Or copy and paste this link in your browser:
+      </p>
+      <div style="color: #c2410c; font-size: 12px; line-height: 1.4; margin: 0 0 24px 0; word-break: break-all; background-color: #fef3e2; padding: 8px 12px; border-radius: 6px; border: 1px solid #f4e4bc;">
+        {{ .InviteURL }}
+      </div>
+      
+      <hr style="border: none; border-top: 1px solid #f4e4bc; margin: 24px 0;">
+      
+      <p style="color: #451a03; font-size: 15px; line-height: 1.5; margin: 0 0 16px 0;">
+        What you can do in Guberspiel:
+      </p>
+      <p style="color: #451a03; font-size: 15px; line-height: 1.5; margin: 0 0 8px 0;">• Log meaningful interactions with circle members</p>
+      <p style="color: #451a03; font-size: 15px; line-height: 1.5; margin: 0 0 8px 0;">• Track giving and receiving in your relationships</p>
+      <p style="color: #451a03; font-size: 15px; line-height: 1.5; margin: 0 0 8px 0;">• View your social balance and circle dynamics</p>
+      <p style="color: #451a03; font-size: 15px; line-height: 1.5; margin: 0 0 8px 0;">• Celebrate the connections that matter most</p>
+    </div>
+    
+    <!-- Footer -->
+    <div style="background-color: #fef3e2; padding: 24px; border-radius: 12px; border: 1px solid #f4e4bc; text-align: center;">
+      <p style="color: #92400e; font-size: 14px; line-height: 1.5; margin: 0 0 16px 0;">
+        If you don't want to join this circle, you can safely ignore this email.
+      </p>
+      <p style="color: #451a03; font-size: 14px; line-height: 1.5; margin: 0; font-weight: 500;">
+        With gratitude,<br>
+        The Guberspiel Team
+      </p>
+    </div>
+  </div>
+</body>
+</html>
