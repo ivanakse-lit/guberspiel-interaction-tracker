@@ -22,6 +22,7 @@ const CreateGroup = () => {
   const [newMember, setNewMember] = useState('');
   const [inviteLink, setInviteLink] = useState('');
   const [loading, setLoading] = useState(false);
+  const [sendEmailInvites, setSendEmailInvites] = useState(false);
 
   const addMember = () => {
     if (newMember.trim() && !members.includes(newMember.trim())) {
@@ -72,10 +73,43 @@ const CreateGroup = () => {
     try {
       const { circle, inviteCode } = await createCircle(circleName, description, members);
       
-      toast({
-        title: "Circle created!",
-        description: `${circleName} has been created successfully.`,
-      });
+      // Send email invitations if requested
+      if (sendEmailInvites && members.length > 0) {
+        const { sendInvitationEmail } = await import('@/services/invitationService');
+        
+        // Filter for email addresses
+        const emailMembers = members.filter(member => member.includes('@'));
+        
+        if (emailMembers.length > 0) {
+          const emailPromises = emailMembers.map(email => 
+            sendInvitationEmail(email, circle.id, inviteCode)
+          );
+          
+          try {
+            await Promise.all(emailPromises);
+            toast({
+              title: "Circle created and invitations sent!",
+              description: `${circleName} has been created and ${emailMembers.length} invitation emails have been sent.`,
+            });
+          } catch (emailError) {
+            console.error('Error sending invitation emails:', emailError);
+            toast({
+              title: "Circle created!",
+              description: `${circleName} has been created, but there was an issue sending some invitation emails.`,
+            });
+          }
+        } else {
+          toast({
+            title: "Circle created!",
+            description: `${circleName} has been created successfully.`,
+          });
+        }
+      } else {
+        toast({
+          title: "Circle created!",
+          description: `${circleName} has been created successfully.`,
+        });
+      }
 
       navigate('/dashboard');
     } catch (error: any) {
@@ -163,6 +197,22 @@ const CreateGroup = () => {
                       <Plus className="h-4 w-4" />
                     </Button>
                   </div>
+                  
+                  {/* Email Invitation Option */}
+                  {members.some(member => member.includes('@')) && (
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id="sendEmailInvites"
+                        checked={sendEmailInvites}
+                        onChange={(e) => setSendEmailInvites(e.target.checked)}
+                        className="rounded border-gray-300"
+                      />
+                      <Label htmlFor="sendEmailInvites" className="text-sm">
+                        Send email invitations to members with email addresses
+                      </Label>
+                    </div>
+                  )}
                   
                   {/* Members List */}
                   {members.length > 0 && (
