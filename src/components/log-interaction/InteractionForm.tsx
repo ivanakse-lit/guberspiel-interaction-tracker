@@ -18,11 +18,14 @@ const InteractionForm = ({ title, setTitle, description, setDescription }: Inter
         <Label htmlFor="title">Title *</Label>
         <Input
           id="title"
-          placeholder="e.g., Helped with moving, Emotional support, Made dinner"
+          placeholder="e.g., Did the dishes, Cleaned common areas, Emotional support, Made dinner for everyone"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="bg-white/70"
         />
+        <p className="text-xs text-gray-600">
+          Tip: Actions that benefit the whole group (like cleaning shared spaces) score higher!
+        </p>
       </div>
 
       <div className="space-y-2">

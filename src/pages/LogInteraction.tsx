@@ -17,7 +17,7 @@ const LogInteraction = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  const [interactionType, setInteractionType] = useState('give'); // Default to give since it's the only option
+  const [interactionType, setInteractionType] = useState('give');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
@@ -41,6 +41,11 @@ const LogInteraction = () => {
     { id: 'dad', name: 'Dad', group: 'family' },
   ];
 
+  // Calculate group member count for scoring
+  const getGroupMemberCount = (groupId: string) => {
+    return people.filter(p => p.group === groupId).length;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !selectedGroup || selectedPeople.length === 0) {
@@ -52,9 +57,13 @@ const LogInteraction = () => {
       return;
     }
 
+    const isEntireGroup = selectedPeople.includes('entire-group');
+    const groupMemberCount = getGroupMemberCount(selectedGroup);
+    const finalScore = isEntireGroup ? value * groupMemberCount : value;
+
     toast({
       title: "Care interaction logged!",
-      description: `Successfully recorded your act of care on ${format(interactionDate, 'PPP')}.`,
+      description: `Successfully recorded your act of care (+${finalScore} points) on ${format(interactionDate, 'PPP')}.`,
     });
 
     navigate('/dashboard');
@@ -123,6 +132,8 @@ const LogInteraction = () => {
                 <ValueSelector 
                   value={value}
                   setValue={setValue}
+                  selectedPeople={selectedPeople}
+                  groupMemberCount={selectedGroup ? getGroupMemberCount(selectedGroup) : 4}
                 />
 
                 <Button 
