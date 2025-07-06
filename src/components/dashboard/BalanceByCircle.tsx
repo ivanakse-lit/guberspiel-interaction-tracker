@@ -26,8 +26,8 @@ interface BalanceByCircleProps {
 }
 
 /**
- * Component to display balance breakdown across all user's circles
- * Shows detailed balance information per circle and overall summary
+ * Component to display activity breakdown across all user's circles
+ * Shows detailed activity information per circle and overall summary
  */
 const BalanceByCircle = ({ userCircles }: BalanceByCircleProps) => {
   return (
@@ -35,21 +35,21 @@ const BalanceByCircle = ({ userCircles }: BalanceByCircleProps) => {
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
           <BarChart3 className="h-5 w-5 text-indigo-600" />
-          <span className="text-gray-800">Balance Across Your Circles</span>
+          <span className="text-gray-800">Activity Across Your Circles</span>
         </CardTitle>
-        <p className="text-gray-600 text-sm">See how your heart's balance flows through each circle of care</p>
+        <p className="text-gray-600 text-sm">See how your connections grow through each circle of care</p>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Empty state when user has no circles */}
         {userCircles.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-gray-500">Join or create circles to see your balance breakdown here.</p>
+            <p className="text-gray-500">Join or create circles to see your activity breakdown here.</p>
           </div>
         ) : (
-          // Individual circle balance cards
+          // Individual circle activity cards
           userCircles.map((membership) => (
             <div key={membership.id} className="bg-gradient-to-r from-white/70 to-orange-50/30 rounded-lg p-6 border border-orange-100/50">
-              {/* Circle header with name and balance */}
+              {/* Circle header with name and score */}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-3">
                   <div className="bg-gradient-to-br from-indigo-100 to-purple-100 p-2 rounded-full">
@@ -60,24 +60,24 @@ const BalanceByCircle = ({ userCircles }: BalanceByCircleProps) => {
                     <p className="text-sm text-gray-600">Circle member</p>
                   </div>
                 </div>
-                {/* Balance display (currently placeholder) */}
+                {/* Activity score display (currently placeholder) */}
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-gray-600">
+                  <div className="text-2xl font-bold text-emerald-600">
                     +0
                   </div>
-                  <p className="text-xs text-gray-500">Your heart's flow</p>
+                  <p className="text-xs text-gray-500">Connection points</p>
                 </div>
               </div>
               
-              {/* Balance progress bar (placeholder for future implementation) */}
+              {/* Activity progress bar (placeholder for future implementation) */}
               <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
-                <div className="h-2 rounded-full bg-gradient-to-r from-gray-300 to-gray-400" style={{ width: '0%' }}></div>
+                <div className="h-2 rounded-full bg-gradient-to-r from-emerald-300 to-emerald-400" style={{ width: '0%' }}></div>
               </div>
               
-              {/* Balance status indicator */}
+              {/* Activity status indicator */}
               <div className="flex justify-between text-sm text-gray-600">
-                <span>🌸 Perfect harmony</span>
-                <span>0 point difference</span>
+                <span>🌱 Ready to grow</span>
+                <span>0 total interactions</span>
               </div>
             </div>
           ))
@@ -88,25 +88,25 @@ const BalanceByCircle = ({ userCircles }: BalanceByCircleProps) => {
           <div className="bg-gradient-to-r from-orange-100/80 to-rose-100/80 rounded-lg p-4 mt-6 border border-orange-200/50">
             <h4 className="font-medium text-orange-900 mb-2 flex items-center space-x-2">
               <Heart className="h-4 w-4" />
-              <span>Your Heart's Summary</span>
+              <span>Your Connection Summary</span>
             </h4>
-            {/* Balance summary grid (placeholder data) */}
+            {/* Activity summary grid (placeholder data) */}
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="text-emerald-700 font-medium">Giving circles: </span>
-                <span className="text-gray-700">0</span>
+                <span className="text-emerald-700 font-medium">Most active circle: </span>
+                <span className="text-gray-700">Getting started</span>
               </div>
               <div>
-                <span className="text-amber-700 font-medium">Receiving circles: </span>
-                <span className="text-gray-700">0</span>
-              </div>
-              <div>
-                <span className="text-indigo-700 font-medium">Balanced circles: </span>
+                <span className="text-amber-700 font-medium">Growing circles: </span>
                 <span className="text-gray-700">{userCircles.length}</span>
               </div>
               <div>
-                <span className="text-rose-700 font-medium">Overall balance: </span>
-                <span className="font-medium text-gray-700">+0</span>
+                <span className="text-indigo-700 font-medium">Total interactions: </span>
+                <span className="text-gray-700">0</span>
+              </div>
+              <div>
+                <span className="text-rose-700 font-medium">Overall score: </span>
+                <span className="font-medium text-emerald-700">+0</span>
               </div>
             </div>
           </div>

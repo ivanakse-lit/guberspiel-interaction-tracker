@@ -141,7 +141,7 @@ const InteractionHistory = () => {
                       <div className="flex items-center justify-end space-x-1">
                         <Gift className="h-4 w-4 text-orange-500" />
                         <span className="font-bold text-orange-600">
-                          {interaction.type === 'give' ? '+' : '+'}{interaction.points}
+                          +{interaction.points}
                         </span>
                       </div>
                     </TableCell>

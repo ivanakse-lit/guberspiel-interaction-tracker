@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { ArrowLeft, Users, Calendar, TrendingUp, TrendingDown, Filter } from 'lucide-react';
+import { ArrowLeft, Users, Calendar, TrendingUp, Filter } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const GroupHistory = () => {
@@ -29,6 +29,7 @@ const GroupHistory = () => {
 
   const totalGiven = 0;
   const totalReceived = 0;
+  const totalPoints = totalGiven + totalReceived;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -64,11 +65,11 @@ const GroupHistory = () => {
         <div className="grid md:grid-cols-4 gap-6 mb-8">
           <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Your Balance</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-600">Your Total Score</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className={`text-2xl font-bold ${group.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {group.balance >= 0 ? '+' : ''}{group.balance}
+              <div className="text-2xl font-bold text-emerald-600">
+                +{totalPoints}
               </div>
             </CardContent>
           </Card>
@@ -88,7 +89,7 @@ const GroupHistory = () => {
           <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg">
             <CardHeader className="pb-3">
               <CardTitle className="text-sm font-medium text-gray-600 flex items-center">
-                <TrendingDown className="h-4 w-4 mr-1 text-blue-600" />
+                <TrendingUp className="h-4 w-4 mr-1 text-blue-600" />
                 Received
               </CardTitle>
             </CardHeader>
@@ -160,7 +161,7 @@ const GroupHistory = () => {
                     <TableHead>Description</TableHead>
                     <TableHead>Participants</TableHead>
                     <TableHead>Type</TableHead>
-                    <TableHead className="text-right">Value</TableHead>
+                    <TableHead className="text-right">Points</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -190,8 +191,8 @@ const GroupHistory = () => {
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
-                        <span className={`font-bold ${interaction.type === 'give' ? 'text-green-600' : 'text-blue-600'}`}>
-                          {interaction.type === 'give' ? '+' : '-'}{interaction.value}
+                        <span className="font-bold text-emerald-600">
+                          +{interaction.value}
                         </span>
                       </TableCell>
                     </TableRow>

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { ArrowLeft, Users, Trophy, TrendingUp, TrendingDown, Award } from 'lucide-react';
+import { ArrowLeft, Users, Trophy, TrendingUp, Award } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const GroupOverview = () => {
@@ -22,8 +22,8 @@ const GroupOverview = () => {
 
   const [memberStats] = useState([]);
 
-  // Sort members by balance (highest to lowest)
-  const sortedMembers = [...memberStats].sort((a, b) => b.balance - a.balance);
+  // Sort members by total points (highest to lowest)
+  const sortedMembers = [...memberStats].sort((a, b) => (b.given + b.received) - (a.given + a.received));
   const currentUserRank = sortedMembers.findIndex(member => member.isCurrentUser) + 1 || 1;
 
   const mostActiveGiver = memberStats.length > 0 ? memberStats.reduce((prev, current) => 
@@ -142,7 +142,7 @@ const GroupOverview = () => {
                     <TableHead>Member</TableHead>
                     <TableHead className="text-center">Given</TableHead>
                     <TableHead className="text-center">Received</TableHead>
-                    <TableHead className="text-center">Balance</TableHead>
+                    <TableHead className="text-center">Total Score</TableHead>
                     <TableHead className="text-center">Activity</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -178,13 +178,13 @@ const GroupOverview = () => {
                       </TableCell>
                       <TableCell className="text-center">
                         <div className="flex items-center justify-center space-x-1">
-                          <TrendingDown className="h-4 w-4 text-blue-600" />
+                          <TrendingUp className="h-4 w-4 text-blue-600" />
                           <span className="font-bold text-blue-600">+{member.received}</span>
                         </div>
                       </TableCell>
                       <TableCell className="text-center">
-                        <span className={`font-bold text-lg ${member.balance >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {member.balance >= 0 ? '+' : ''}{member.balance}
+                        <span className="font-bold text-lg text-emerald-600">
+                          +{member.given + member.received}
                         </span>
                       </TableCell>
                       <TableCell className="text-center">
@@ -217,9 +217,9 @@ const GroupOverview = () => {
                       <span className="font-medium">#{currentUserRank} out of {group.members}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Balance compared to average:</span>
-                      <span className={`font-medium ${memberStats.find(m => m.isCurrentUser)?.balance && memberStats.find(m => m.isCurrentUser)!.balance > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                        {memberStats.find(m => m.isCurrentUser)?.balance && memberStats.find(m => m.isCurrentUser)!.balance > 0 ? 'Above' : 'Below'} average
+                      <span className="text-gray-600">Your total score:</span>
+                      <span className="font-medium text-emerald-600">
+                        +{(memberStats.find(m => m.isCurrentUser)?.given || 0) + (memberStats.find(m => m.isCurrentUser)?.received || 0)}
                       </span>
                     </div>
                     <div className="flex justify-between">
@@ -234,11 +234,11 @@ const GroupOverview = () => {
                   <h4 className="font-medium text-gray-900">Recommendations</h4>
                   <div className="text-sm text-gray-700 space-y-1">
                     {currentUserRank === 1 ? (
-                      <p className="text-green-600">🎉 You're the top contributor! Keep up the great work.</p>
+                      <p className="text-green-600">🎉 You're the most active member! Keep up the great work.</p>
                     ) : currentUserRank <= group.members / 2 ? (
                       <p>👍 You're performing well in this group.</p>
                     ) : (
-                      <p className="text-orange-600">💡 Consider contributing more to improve your balance.</p>
+                      <p className="text-orange-600">💡 Consider being more active to improve your ranking.</p>
                     )}
                     <p>You've been involved in {((memberStats.find(m => m.isCurrentUser)?.totalInteractions || 0) / group.totalInteractions * 100).toFixed(0)}% of group interactions.</p>
                   </div>

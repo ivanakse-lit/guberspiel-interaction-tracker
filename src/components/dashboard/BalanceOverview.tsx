@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp, TrendingDown, Users, HandHeart, Star } from 'lucide-react';
+import { TrendingUp, Users, HandHeart, Star } from 'lucide-react';
 
 interface BalanceOverviewProps {
   userBalance: number;
@@ -10,7 +10,7 @@ interface BalanceOverviewProps {
 
 /**
  * Overview cards showing user's overall balance and activity metrics
- * Displays balance with contextual messaging based on positive/negative/neutral values
+ * Displays balance with contextual messaging based on activity levels
  */
 const BalanceOverview = ({ userBalance, circleCount }: BalanceOverviewProps) => {
   return (
@@ -21,29 +21,25 @@ const BalanceOverview = ({ userBalance, circleCount }: BalanceOverviewProps) => 
           <CardTitle className="flex items-center justify-between text-gray-800">
             <div className="flex items-center space-x-2">
               <HandHeart className="h-5 w-5 text-rose-500" />
-              <span>Your Heart's Balance</span>
+              <span>Your Connection Score</span>
             </div>
-            {/* Dynamic trend indicator based on balance */}
-            {userBalance >= 0 ? (
-              <TrendingUp className="h-5 w-5 text-emerald-600" />
-            ) : (
-              <TrendingDown className="h-5 w-5 text-amber-600" />
-            )}
+            <TrendingUp className="h-5 w-5 text-emerald-600" />
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {/* Balance value with conditional styling */}
+          {/* Balance value - always positive */}
           <div className="text-3xl font-bold mb-2">
-            <span className={userBalance >= 0 ? 'text-emerald-600' : 'text-amber-600'}>
-              {userBalance >= 0 ? '+' : ''}{userBalance}
+            <span className="text-emerald-600">
+              +{userBalance}
             </span>
           </div>
           
           {/* Contextual message based on balance state */}
           <p className="text-gray-600 text-sm mb-3">
-            {userBalance > 0 && "Your heart overflows with giving ✨"}
-            {userBalance === 0 && "Beautiful harmony in your relationships 🌸"}
-            {userBalance < 0 && "You're cherished and supported 💕"}
+            {userBalance > 10 && "Your connections are thriving! ✨"}
+            {userBalance >= 5 && userBalance <= 10 && "Building beautiful relationships 🌸"}
+            {userBalance > 0 && userBalance < 5 && "Growing your circle of care 💕"}
+            {userBalance === 0 && "Ready to start your journey 🌱"}
           </p>
           
           {/* Circle count context */}
