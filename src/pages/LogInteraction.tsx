@@ -17,7 +17,7 @@ const LogInteraction = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  const [interactionType, setInteractionType] = useState('');
+  const [interactionType, setInteractionType] = useState('give'); // Default to give since it's the only option
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
@@ -43,7 +43,7 @@ const LogInteraction = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !interactionType || !selectedGroup || selectedPeople.length === 0) {
+    if (!title || !selectedGroup || selectedPeople.length === 0) {
       toast({
         title: "Missing information",
         description: "Please fill in all required fields.",
@@ -53,8 +53,8 @@ const LogInteraction = () => {
     }
 
     toast({
-      title: "Interaction logged!",
-      description: `Successfully recorded your ${interactionType} interaction on ${format(interactionDate, 'PPP')}.`,
+      title: "Care interaction logged!",
+      description: `Successfully recorded your act of care on ${format(interactionDate, 'PPP')}.`,
     });
 
     navigate('/dashboard');
@@ -74,7 +74,7 @@ const LogInteraction = () => {
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Dashboard
           </Button>
-          <h1 className="text-xl font-bold text-gray-900">Log New Interaction</h1>
+          <h1 className="text-xl font-bold text-gray-900">Log Care Given</h1>
         </div>
       </header>
 
@@ -82,7 +82,10 @@ const LogInteraction = () => {
         <div className="max-w-2xl mx-auto">
           <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg">
             <CardHeader>
-              <CardTitle>Record an Interaction</CardTitle>
+              <CardTitle>Record an Act of Care</CardTitle>
+              <p className="text-gray-600 text-sm">
+                Track the care and support you've given to others in your circles
+              </p>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -127,7 +130,7 @@ const LogInteraction = () => {
                   className="w-full bg-indigo-600 hover:bg-indigo-700"
                   size="lg"
                 >
-                  Log Interaction
+                  Log Care Given
                 </Button>
               </form>
             </CardContent>

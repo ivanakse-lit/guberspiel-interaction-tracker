@@ -3,12 +3,12 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { History, ArrowUp, ArrowDown, Calendar, Users, Gift } from 'lucide-react';
+import { History, ArrowUp, Calendar, Users, Gift } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 
 interface Interaction {
   id: string;
-  type: 'give' | 'receive';
+  type: 'give';
   title: string;
   description?: string;
   points: number;
@@ -18,7 +18,7 @@ interface Interaction {
   otherPerson: string;
 }
 
-// Mock interaction data with both interaction date and logged date
+// Mock interaction data with only giving interactions
 const mockInteractions: Interaction[] = [
   {
     id: '1',
@@ -33,8 +33,8 @@ const mockInteractions: Interaction[] = [
   },
   {
     id: '2',
-    type: 'receive',
-    title: 'Made dinner',
+    type: 'give',
+    title: 'Made dinner for everyone',
     points: 2,
     date: new Date('2024-06-22'),
     loggedDate: new Date('2024-06-22'),
@@ -60,14 +60,15 @@ const InteractionHistory = () => {
       <CardHeader>
         <CardTitle className="flex items-center space-x-2 text-gray-800">
           <History className="h-5 w-5 text-indigo-500" />
-          <span>Interaction History</span>
+          <span>Your Giving History</span>
         </CardTitle>
+        <p className="text-gray-600 text-sm">Track all the care you've given to others</p>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           {mockInteractions.length === 0 ? (
             <p className="text-gray-500 text-center py-8">
-              No interactions yet. Start sharing moments of care!
+              No giving interactions yet. Start sharing moments of care!
             </p>
           ) : (
             <Table>
@@ -85,19 +86,11 @@ const InteractionHistory = () => {
                   <TableRow key={interaction.id} className="hover:bg-gray-50/50">
                     <TableCell>
                       <Badge
-                        variant={interaction.type === 'give' ? 'default' : 'secondary'}
-                        className={`flex items-center space-x-1 ${
-                          interaction.type === 'give' 
-                            ? 'bg-green-100 text-green-800 hover:bg-green-200' 
-                            : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
-                        }`}
+                        variant="default"
+                        className="flex items-center space-x-1 bg-green-100 text-green-800 hover:bg-green-200"
                       >
-                        {interaction.type === 'give' ? (
-                          <ArrowUp className="h-3 w-3" />
-                        ) : (
-                          <ArrowDown className="h-3 w-3" />
-                        )}
-                        <span>{interaction.type === 'give' ? 'Gave' : 'Received'}</span>
+                        <ArrowUp className="h-3 w-3" />
+                        <span>Gave</span>
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -108,7 +101,7 @@ const InteractionHistory = () => {
                         )}
                         <div className="flex items-center text-xs text-gray-500">
                           <Users className="h-3 w-3 mr-1" />
-                          {interaction.type === 'give' ? 'To' : 'From'} {interaction.otherPerson}
+                          To {interaction.otherPerson}
                         </div>
                       </div>
                     </TableCell>

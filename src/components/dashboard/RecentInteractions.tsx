@@ -2,12 +2,12 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Heart, ArrowUp, ArrowDown, Calendar, Clock } from 'lucide-react';
+import { Heart, ArrowUp, Calendar, Clock } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 
 interface RecentInteraction {
   id: string;
-  type: 'give' | 'receive';
+  type: 'give';
   title: string;
   points: number;
   date: Date;
@@ -16,7 +16,7 @@ interface RecentInteraction {
   otherPerson: string;
 }
 
-// Mock recent interactions
+// Mock recent interactions with only giving
 const mockRecentInteractions: RecentInteraction[] = [
   {
     id: '1',
@@ -30,8 +30,8 @@ const mockRecentInteractions: RecentInteraction[] = [
   },
   {
     id: '2',
-    type: 'receive',
-    title: 'Made dinner',
+    type: 'give',
+    title: 'Made dinner for everyone',
     points: 2,
     date: new Date('2024-06-22'),
     loggedDate: new Date('2024-06-22'),
@@ -51,7 +51,7 @@ const mockRecentInteractions: RecentInteraction[] = [
 ];
 
 /**
- * Component to display recent interactions/moments of care
+ * Component to display recent giving interactions/moments of care
  * Shows detailed information about when interactions occurred vs when they were logged
  */
 const RecentInteractions = () => {
@@ -60,13 +60,14 @@ const RecentInteractions = () => {
       <CardHeader>
         <CardTitle className="flex items-center space-x-2 text-gray-800">
           <Heart className="h-5 w-5 text-rose-500" />
-          <span>Recent Moments of Care</span>
+          <span>Recent Care Given</span>
         </CardTitle>
+        <p className="text-gray-600 text-sm">Your latest acts of kindness and support</p>
       </CardHeader>
       <CardContent className="space-y-4">
         {mockRecentInteractions.length === 0 ? (
           <p className="text-gray-500 text-center py-8">
-            No interactions yet. Start sharing moments of care!
+            No giving interactions yet. Start sharing moments of care!
           </p>
         ) : (
           <div className="space-y-4">
@@ -79,19 +80,11 @@ const RecentInteractions = () => {
                   <div className="flex-1 space-y-2">
                     <div className="flex items-center space-x-2">
                       <Badge
-                        variant={interaction.type === 'give' ? 'default' : 'secondary'}
-                        className={`flex items-center space-x-1 ${
-                          interaction.type === 'give' 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-blue-100 text-blue-800'
-                        }`}
+                        variant="default"
+                        className="flex items-center space-x-1 bg-green-100 text-green-800"
                       >
-                        {interaction.type === 'give' ? (
-                          <ArrowUp className="h-3 w-3" />
-                        ) : (
-                          <ArrowDown className="h-3 w-3" />
-                        )}
-                        <span>{interaction.type === 'give' ? 'Gave' : 'Received'}</span>
+                        <ArrowUp className="h-3 w-3" />
+                        <span>Gave</span>
                       </Badge>
                       <Badge variant="outline" className="text-xs">
                         {interaction.circle}
@@ -101,7 +94,7 @@ const RecentInteractions = () => {
                     <div>
                       <h4 className="font-medium text-gray-900">{interaction.title}</h4>
                       <p className="text-sm text-gray-600">
-                        {interaction.type === 'give' ? 'To' : 'From'} {interaction.otherPerson}
+                        To {interaction.otherPerson}
                       </p>
                     </div>
                     

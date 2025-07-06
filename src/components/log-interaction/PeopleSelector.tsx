@@ -21,8 +21,7 @@ const PeopleSelector = ({
   selectedGroup, 
   selectedPeople, 
   setSelectedPeople, 
-  people, 
-  interactionType 
+  people 
 }: PeopleSelectorProps) => {
   const filteredPeople = selectedGroup ? people.filter(p => p.group === selectedGroup) : [];
 
@@ -38,9 +37,7 @@ const PeopleSelector = ({
 
   return (
     <div className="space-y-2">
-      <Label>
-        {interactionType === 'give' ? 'Who received?' : 'Who gave?'} *
-      </Label>
+      <Label>Who received your care? *</Label>
       <div className="space-y-2">
         {filteredPeople.map((person) => (
           <div
