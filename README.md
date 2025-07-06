@@ -5,7 +5,7 @@ A web application that helps communities track and celebrate acts of kindness th
 
 ## 🌟 What is GratitudeCoin?
 
-GratitudeCoin is a digital platform designed to foster appreciation and strengthen relationships within small, close-knit communities like families, friend groups, flatmates, or study groups. Members can give and receive "gratitude points" for acts of kindness, creating a beautiful record of care and support within their circles.
+GratitudeCoin is a digital platform designed to foster appreciation and strengthen relationships within small, close-knit communities like families, friend groups, flatmates, or study groups. Members can give "gratitude points" for acts of kindness, creating a beautiful record of care and support within their circles.
 
 Built on **Experience Economy principles**, GratitudeCoin transforms routine relationship tracking into a memorable journey of personal growth and connection through thoughtful gamification.
 
@@ -17,9 +17,13 @@ Built on **Experience Economy principles**, GratitudeCoin transforms routine rel
 - **Circle creation** with customizable descriptions and settings
 
 ### 💝 Gratitude Tracking
-- **Log interactions** - Record acts of kindness with descriptions and point values
-- **Balance tracking** - See your giving/receiving balance across all circles
+- **Log giving interactions** - Record acts of kindness you've given with descriptions and impact levels
+- **Individual & Group Benefits** - Track care given to specific people or the entire group
+- **Enhanced scoring for group benefits** - Group-wide actions score higher (impact × number of members)
+- **Balance tracking** - See your total giving score across all circles
 - **Recent activity** - View recent moments of care and appreciation
+- **Interaction history** - Browse past acts of kindness with detailed timelines
+- **Backdate interactions** - Log moments of care with their actual occurrence date
 
 ### 👥 Community Features
 - **Multiple circles** - Participate in various communities (family, friends, work, etc.)
@@ -27,7 +31,7 @@ Built on **Experience Economy principles**, GratitudeCoin transforms routine rel
 - **History tracking** - Browse past interactions and milestones
 
 ### 🎮 Gamification & Experience Design
-- **Achievement System** - Earn badges for meaningful milestones like "Generous Heart" and "Balanced Soul"
+- **Achievement System** - Earn badges for meaningful milestones like "Generous Heart" and "Group Helper"
 - **Level Progression** - Gain XP through positive interactions and unlock new features
 - **Visual Progress** - Watch your "Gratitude Garden" grow with acts of kindness
 - **Social Recognition** - Circle leaderboards and "Member of the Week" nominations
@@ -45,9 +49,9 @@ GratitudeCoin applies Pine & Gilmore's **Experience Economy** principles to tran
 
 ### Four Realms of Experience
 - **Entertainment**: Animated progress, celebrations, and engaging visualizations
-- **Educational**: Learning healthy relationship patterns through balance feedback
+- **Educational**: Learning healthy relationship patterns through giving feedback
 - **Escapist**: Personal achievement galleries and customizable identity spaces  
-- **Esthetic**: Beautiful, harmonious design that reflects inner balance
+- **Esthetic**: Beautiful, harmonious design that reflects inner generosity
 
 ### Experience Transformation
 - **From Service to Experience**: Beyond tracking to staging memorable gratitude journeys
@@ -164,6 +168,7 @@ src/
 ├── components/
 │   ├── ui/                 # shadcn/ui components
 │   ├── dashboard/          # Dashboard-specific components
+│   ├── log-interaction/    # Interaction logging components
 │   └── AuthForm.tsx        # Authentication form
 ├── contexts/
 │   └── AuthContext.tsx     # Authentication context
@@ -194,9 +199,10 @@ src/
 - Manage circle memberships and permissions
 
 ### Interaction Tracking
-- Log acts of kindness with descriptions
-- Assign point values to interactions
-- Track giving and receiving across circles
+- Log acts of kindness with descriptions and impact levels
+- Support for individual and group-wide benefits
+- Enhanced scoring system that rewards community contributions
+- Track giving across circles with comprehensive history
 
 ### Gamification Engine
 - Achievement system with meaningful milestones
@@ -216,16 +222,16 @@ src/
 
 ### Intrinsic Motivation Focus
 - **Autonomy**: Users choose their own goals and participation level
-- **Mastery**: Progressive skill building in gratitude and reciprocity
+- **Mastery**: Progressive skill building in gratitude and generosity
 - **Purpose**: Clear connection to meaningful relationship building
 
-### Positive Feedback Loops
-Logging interactions → Immediate visual feedback → Social recognition → Increased motivation → Deeper relationships
+### Positive Contribution Focus
+Logging giving interactions → Immediate visual feedback → Social recognition → Increased motivation → Deeper relationships
 
-### Balance-Based Incentives
-- Encourage healthy reciprocity rather than just "giving more"
-- Celebrate being supported as well as supporting others
-- Recognize consistent contribution patterns over time
+### Community-Centered Incentives
+- Encourage actions that benefit the entire group
+- Celebrate consistent contribution patterns over time
+- Recognize both individual care and community building
 
 ## 🔮 Future Enhancements
 
@@ -236,7 +242,7 @@ Logging interactions → Immediate visual feedback → Social recognition → In
 - Enhanced visual progress with AR/VR elements
 
 ### Platform Features
-- Email notifications for invitations and interactions
+- Email notifications for interactions and achievements
 - Advanced analytics and insights
 - Mobile app development
 - Integration with calendar and task management tools

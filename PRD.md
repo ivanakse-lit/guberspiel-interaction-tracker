@@ -15,7 +15,7 @@
 
 **"Create a digital platform that strengthens community bonds by making acts of kindness visible, celebrated, and tracked within small, trusted circles."**
 
-GratitudeCoin transforms how communities acknowledge and appreciate each other's contributions, fostering deeper connections and a culture of gratitude.
+GratitudeCoin transforms how communities acknowledge and appreciate each other's contributions, fostering deeper connections and a culture of gratitude through positive giving interactions.
 
 ---
 
@@ -23,15 +23,15 @@ GratitudeCoin transforms how communities acknowledge and appreciate each other's
 
 ### Core Problems
 1. **Invisible Kindness**: Many acts of care and support go unnoticed or unacknowledged within communities
-2. **Unbalanced Giving**: Some people consistently give more than they receive, leading to burnout and resentment
-3. **Forgotten Contributions**: Good deeds are quickly forgotten, reducing motivation for future kindness
-4. **Lack of Community Awareness**: Members don't always see the full picture of how they support each other
+2. **Unrecognized Contributions**: People who consistently give to their community don't receive proper recognition
+3. **Forgotten Good Deeds**: Positive actions are quickly forgotten, reducing motivation for future kindness
+4. **Lack of Community Awareness**: Members don't always see the full picture of how they contribute to their circles
 
 ### Target Pain Points
-- Flatmates feeling unappreciated for household contributions
-- Family members' emotional support going unrecognized
-- Study group members not acknowledging academic help received
-- Workplace teams lacking visibility into peer support
+- Flatmates feeling unappreciated for household contributions that benefit everyone
+- Family members' care and support going unrecognized
+- Study group members not acknowledging help and resources shared
+- Workplace teams lacking visibility into peer support and collaboration
 
 ---
 
@@ -49,21 +49,21 @@ GratitudeCoin transforms how communities acknowledge and appreciate each other's
 
 #### Persona 1: "Sarah the Organizer" (Family/Flatmate Leader)
 - Age: 25-35
-- Role: Takes initiative in organizing group activities
-- Pain: Feels overwhelmed by coordinating everything, wants recognition
-- Goal: Ensure fair distribution of responsibilities and appreciation
+- Role: Takes initiative in organizing group activities and maintaining shared spaces
+- Pain: Feels overwhelmed by coordinating everything, wants recognition for community contributions
+- Goal: Ensure fair distribution of responsibilities and appreciation for group-benefiting actions
 
 #### Persona 2: "Mike the Contributor" (Steady Helper)
 - Age: 20-45
-- Role: Consistently helps others but doesn't seek spotlight
-- Pain: Sometimes feels taken for granted
-- Goal: Have contributions acknowledged without having to ask
+- Role: Consistently helps others and maintains shared spaces but doesn't seek spotlight
+- Pain: Sometimes feels taken for granted, especially for group-wide contributions
+- Goal: Have contributions acknowledged without having to ask, especially community-benefiting actions
 
-#### Persona 3: "Emma the Receiver" (Grateful Beneficiary)
+#### Persona 3: "Emma the Recognizer" (Grateful Acknowledger)
 - Age: 18-60
-- Role: Often receives help, wants to express gratitude
-- Pain: Forgets to thank people or doesn't know how to show appreciation
-- Goal: Easily acknowledge help received and track what to reciprocate
+- Role: Often benefits from others' care, wants to express gratitude and track contributions
+- Pain: Forgets to thank people or doesn't know how to show appreciation for community care
+- Goal: Easily acknowledge care received and understand community contribution patterns
 
 ---
 
@@ -73,12 +73,12 @@ GratitudeCoin transforms how communities acknowledge and appreciate each other's
 1. **Increase Gratitude Expression**: Make it easy and natural to acknowledge acts of kindness
 2. **Improve Community Harmony**: Reduce conflicts arising from unacknowledged contributions
 3. **Encourage Positive Behavior**: Motivate continued acts of kindness through recognition
-4. **Create Transparency**: Provide visibility into community dynamics and contribution patterns
+4. **Create Transparency**: Provide visibility into community contribution patterns
 
 ### Success Metrics
-- **Engagement**: Average interactions logged per user per week (Target: 3-5)
+- **Engagement**: Average giving interactions logged per user per week (Target: 3-5)
 - **Retention**: Monthly active users (Target: 80% at 3 months)
-- **Balance**: Percentage of users with balanced giving/receiving (Target: 60%)
+- **Community Focus**: Percentage of interactions benefiting entire groups (Target: 40%)
 - **Satisfaction**: User happiness score (Target: 4.5/5)
 
 ---
@@ -98,22 +98,26 @@ GratitudeCoin transforms how communities acknowledge and appreciate each other's
 - **Join Circles**: Accept invitations to join existing circles
 - **Member Management**: View circle members and basic info
 
-#### 3. Interaction Logging
-- **Record Acts of Kindness**: Log interactions with descriptions and point values
-- **Categorization**: Select interaction types (help, emotional support, etc.)
-- **Point Assignment**: Assign 1-5 point values based on effort/impact
-- **Real-time Updates**: Immediately update balances and feeds
+#### 3. Giving Interaction Logging
+- **Record Acts of Care**: Log giving interactions with descriptions and impact levels (1-5)
+- **Individual Recipients**: Select specific circle members who benefited
+- **Group-Wide Benefits**: Option to select "Entire Group" for community-benefiting actions
+- **Enhanced Group Scoring**: Group-wide actions score higher (impact level × number of members)
+- **Backdate Interactions**: Log interactions with their actual occurrence date
+- **Real-time Updates**: Immediately update scores and feeds
 
-#### 4. Balance Tracking
-- **Personal Balance**: Track giving vs. receiving across all circles
-- **Circle-specific Balances**: See balance within each individual circle
-- **Visual Indicators**: Clear display of positive/negative/neutral balances
-- **Balance History**: Track balance changes over time
+#### 4. Score Tracking
+- **Personal Score**: Track total giving points across all circles
+- **Circle-specific Scores**: See contribution within each individual circle
+- **Visual Indicators**: Clear display of total positive contributions
+- **Score History**: Track score changes over time
+- **Group Impact Recognition**: Special recognition for community-benefiting actions
 
-#### 5. Activity Feeds
+#### 5. Activity Feeds & History
 - **Recent Interactions**: View recent acts of kindness across circles
 - **Circle Activity**: See activity within specific circles
-- **Personal History**: Review your own giving and receiving history
+- **Personal History**: Review your own giving history with detailed timelines
+- **Interaction Timeline**: Track both occurrence dates and logging dates
 
 ---
 
@@ -128,103 +132,103 @@ GratitudeCoin transforms how communities acknowledge and appreciate each other's
 #### 1. Four Realms of Experience Integration
 
 **Entertainment** (Passive Absorption):
-- Visual progress bars and achievement celebrations
-- Animated "Gratitude Garden" that grows with positive interactions
-- Dynamic leaderboards with engaging visualizations
+- Visual progress bars and achievement celebrations for giving milestones
+- Animated "Generosity Garden" that grows with positive contributions
+- Dynamic leaderboards celebrating community contributors
 
 **Educational** (Active Absorption):
-- Balance feedback teaching healthy relationship patterns
-- Streak tracking revealing gratitude habits
-- Insights into reciprocity through visual representations
+- Contribution feedback teaching healthy community participation
+- Streak tracking revealing giving habits
+- Insights into community impact through visual representations
 
 **Escapist** (Active Immersion):
-- Customizable profile themes and badges
-- Circle challenges creating shared adventures
-- Personal achievement galleries as identity spaces
+- Customizable profile themes and badges for givers
+- Circle challenges creating shared adventures focused on community building
+- Personal achievement galleries showcasing contribution history
 
 **Esthetic** (Passive Immersion):
-- Beautiful, evolving visual representations of progress
-- Harmonious design reflecting inner balance
-- Themed interfaces that respond to user achievements
+- Beautiful, evolving visual representations of giving progress
+- Harmonious design reflecting community spirit
+- Themed interfaces that respond to contribution achievements
 
 #### 2. Core Gamification Elements
 
 **Achievement System**:
-- "First Steps" - Log your first interaction
-- "Generous Heart" - Give more than you receive in a week
-- "Balanced Soul" - Maintain balance between -2 and +2 for a week
-- "Circle Builder" - Create your first circle
-- "Community Connector" - Join 3 circles
-- "Streak Master" - Log interactions for 7 consecutive days
-- "Big Helper" - Give a high-value interaction (3+ points)
+- "First Steps" - Log your first giving interaction
+- "Generous Heart" - Give consistently over a week
+- "Community Builder" - Log multiple group-wide interactions
+- "Circle Creator" - Create your first circle
+- "Circle Connector" - Join multiple circles
+- "Streak Master" - Log giving interactions for 7 consecutive days
+- "Group Champion" - Specialize in community-benefiting actions
 
 **Level/XP System**:
-- Earn XP for logging interactions, maintaining balance, creating circles
+- Earn XP for logging giving interactions, with bonuses for group-wide benefits
 - Level progression unlocks new features and cosmetic rewards
-- XP multipliers for different interaction types and behaviors
+- XP multipliers for community-focused behaviors
 
 **Social Recognition**:
-- Weekly/monthly circle leaderboards for most generous members
-- "Member of the Week" nomination system
-- Public appreciation walls (opt-in)
+- Weekly/monthly circle leaderboards for most generous contributors
+- "Community Hero of the Week" for group-benefiting actions
+- Public appreciation walls (opt-in) celebrating givers
 
 **Visual Progress & Rewards**:
-- Digital badges as memorabilia of meaningful moments
-- Profile customization options unlocked through achievements
-- Progress visualization through metaphors (gardens, hearts, etc.)
+- Digital badges as memorabilia of meaningful giving moments
+- Profile customization options unlocked through contribution achievements
+- Progress visualization through metaphors (gardens, hearts, community symbols)
 
 #### 3. Experience Design Principles
 
 **Intrinsic Motivation Focus**:
-- Autonomy: Users choose their own goals and challenges
-- Mastery: Progressive skill building in gratitude and reciprocity  
-- Purpose: Clear connection to meaningful relationship building
+- Autonomy: Users choose their own contribution goals and challenges
+- Mastery: Progressive skill building in generosity and community building
+- Purpose: Clear connection to meaningful relationship and community strengthening
 
 **Positive Feedback Loops**:
-Logging interactions → Immediate visual feedback → Social recognition → Increased motivation → More logging
+Logging giving interactions → Immediate visual feedback → Social recognition → Increased motivation → More community contribution
 
-**Balance-Based Incentives**:
-- Harmony Bonus: Extra XP for maintaining balanced relationships
-- Comeback Recognition: Special achievements for improving from negative balance
-- Steady Supporter: Consistent positive contribution rewards
+**Community-Centered Incentives**:
+- Group Benefit Bonus: Extra XP for actions that help the entire community
+- Community Champion: Special achievements for consistent group-wide contributions
+- Circle Builder: Recognition for actions that strengthen the entire circle
 
 ### Phase 2 Features (Future Releases)
 
 #### Enhanced Social Features
-- **Comments**: Add context or thanks to logged interactions
-- **Reactions**: Emoji reactions to interactions
-- **Milestone Celebrations**: Recognize significant contribution milestones
+- **Comments**: Add context or appreciation to logged giving interactions
+- **Reactions**: Emoji reactions to contribution posts
+- **Milestone Celebrations**: Recognize significant contribution achievements
 
 #### Advanced Analytics
-- **Trend Analysis**: Track patterns in giving and receiving
-- **Circle Health Metrics**: Assess overall circle dynamics
-- **Personal Insights**: Understand your contribution patterns
+- **Contribution Analysis**: Track patterns in giving and community impact
+- **Circle Health Metrics**: Assess overall circle contribution dynamics  
+- **Personal Insights**: Understand your contribution patterns and community impact
 
 #### Notification System
-- **Email Notifications**: Alerts for new interactions and invitations
-- **In-app Notifications**: Real-time updates on activity
-- **Weekly Summaries**: Regular reports on circle activity
+- **Email Notifications**: Alerts for new interactions and achievements
+- **In-app Notifications**: Real-time updates on circle activity
+- **Weekly Summaries**: Regular reports on contribution activity and milestones
 
 ---
 
 ## 🎨 User Experience Requirements
 
 ### Design Principles
-1. **Warmth & Positivity**: Use warm colors (orange, rose) and friendly language
-2. **Simplicity**: Keep interactions simple and intuitive
-3. **Recognition-Focused**: Emphasize celebrating positive actions
-4. **Non-Competitive**: Avoid ranking or comparison features that create competition
+1. **Warmth & Positivity**: Use warm colors (orange, rose) and encouraging language
+2. **Simplicity**: Keep interaction logging simple and intuitive
+3. **Recognition-Focused**: Emphasize celebrating positive giving actions
+4. **Community-Centered**: Highlight group benefits and community impact
 
 ### User Interface Guidelines
 - **Color Palette**: Warm gradients (amber to rose) with calming backgrounds
-- **Typography**: Friendly, readable fonts that convey warmth
+- **Typography**: Friendly, readable fonts that convey warmth and appreciation
 - **Icons**: Heart-based and community-focused iconography
 - **Responsive Design**: Work seamlessly on mobile and desktop
 
 ### User Journey
-1. **Onboarding**: Simple registration → Create/join first circle → Log first interaction
-2. **Daily Use**: Quick interaction logging → View recent activity → Check balance
-3. **Community Building**: Invite new members → Celebrate milestones → Review history
+1. **Onboarding**: Simple registration → Create/join first circle → Log first giving interaction
+2. **Daily Use**: Quick giving interaction logging → View recent activity → Check contribution score
+3. **Community Building**: Invite new members → Celebrate contribution milestones → Review history
 
 ---
 
@@ -232,8 +236,8 @@ Logging interactions → Immediate visual feedback → Social recognition → In
 
 ### Platform Requirements
 - **Web Application**: React-based SPA with responsive design
-- **Mobile-First**: Optimized for mobile usage patterns
-- **Real-time Updates**: Live updates for interactions and balances
+- **Mobile-First**: Optimized for mobile contribution logging patterns
+- **Real-time Updates**: Live updates for interactions and scores
 - **Offline Capability**: Cache recent data for offline viewing
 
 ### Performance Requirements
@@ -254,83 +258,83 @@ Logging interactions → Immediate visual feedback → Social recognition → In
 
 ### Beta Testing (4 weeks)
 - **Closed Beta**: 5-10 small communities (friends/family of team)
-- **Feedback Collection**: Weekly surveys and user interviews
+- **Feedback Collection**: Weekly surveys and user interviews focusing on giving experience
 - **Bug Fixes**: Address critical issues and usability problems
-- **Feature Refinement**: Adjust based on user behavior patterns
+- **Feature Refinement**: Adjust based on contribution behavior patterns
 
 ### Soft Launch (6 weeks)
 - **Limited Release**: Open to 50-100 users across various community types
-- **Performance Monitoring**: Track system performance and user engagement
+- **Performance Monitoring**: Track system performance and contribution engagement
 - **Support System**: Establish user support and feedback channels
-- **Marketing Materials**: Create onboarding guides and help documentation
+- **Marketing Materials**: Create onboarding guides emphasizing positive contribution culture
 
 ### Public Launch
 - **Open Access**: Remove invitation restrictions
-- **Marketing Campaign**: Social media, content marketing, community outreach
+- **Marketing Campaign**: Social media, content marketing, community outreach focusing on gratitude culture
 - **Partnership Opportunities**: Explore integrations with community platforms
-- **Growth Tracking**: Monitor user acquisition and retention metrics
+- **Growth Tracking**: Monitor user acquisition and contribution engagement metrics
 
 ---
 
 ## 📊 Business Model
 
 ### Initial Approach
-- **Free Platform**: MVP launched as free service to build user base
-- **Data-Driven**: Focus on user engagement and community health metrics
-- **Feedback-Focused**: Prioritize user satisfaction and feature requests
+- **Free Platform**: MVP launched as free service to build contributor base
+- **Data-Driven**: Focus on user engagement and community contribution health metrics
+- **Feedback-Focused**: Prioritize user satisfaction and contribution experience requests
 
 ### Future Monetization Options
-- **Premium Features**: Advanced analytics, custom themes, enhanced privacy
+- **Premium Features**: Advanced analytics, custom themes, enhanced community features
 - **Enterprise Edition**: Features for larger organizations and communities
 - **API Access**: Allow third-party integrations and custom applications
-- **Community Consulting**: Services to help organizations build gratitude cultures
+- **Community Consulting**: Services to help organizations build gratitude and contribution cultures
 
 ---
 
 ## ⚠️ Risks & Mitigation
 
 ### Technical Risks
-- **Scalability**: Plan for database optimization and caching strategies
-- **Real-time Performance**: Implement efficient websocket connections
-- **Data Integrity**: Robust backup and recovery procedures
+- **Scalability**: Plan for database optimization and caching strategies for contribution data
+- **Real-time Performance**: Implement efficient websocket connections for live updates
+- **Data Integrity**: Robust backup and recovery procedures for contribution history
 
 ### Product Risks
-- **Low Adoption**: Start with tight-knit communities to build engagement
+- **Low Adoption**: Start with tight-knit communities to build contribution engagement
 - **Misuse**: Clear community guidelines and moderation tools
 - **Privacy Concerns**: Transparent data practices and user controls
 
 ### Business Risks
-- **Market Fit**: Continuous user research and feature iteration
-- **Competition**: Focus on unique community-first approach
-- **Sustainability**: Plan monetization that aligns with user value
+- **Market Fit**: Continuous user research and feature iteration focused on contribution experience
+- **Competition**: Focus on unique community-first approach to gratitude
+- **Sustainability**: Plan monetization that aligns with positive community building
 
 ---
 
 ## 📈 Success Metrics & KPIs
 
 ### User Engagement
-- Daily/Weekly/Monthly Active Users
-- Average interactions logged per user
+- Daily/Weekly/Monthly Active Contributors
+- Average giving interactions logged per user
 - Time spent in application
-- Return visit frequency
+- Return visit frequency for contribution logging
 
 ### Community Health
-- Balance distribution across users
-- Interaction reciprocity rates
-- Circle growth and retention
-- User satisfaction scores
+- Distribution of individual vs. group-wide contributions
+- Circle contribution activity and retention
+- User satisfaction with contribution recognition
+- Community building milestone achievements
 
 ### Product Performance
-- Feature adoption rates
-- User onboarding completion
+- Feature adoption rates for giving interactions
+- User onboarding completion focusing on first contribution
 - Support ticket volume
 - App performance metrics
 
 ### Gamification Metrics
-- Achievement completion rates
-- Level progression patterns
-- Social feature engagement
-- Long-term retention correlation with gamification elements
+- Achievement completion rates for contribution milestones
+- Level progression patterns among contributors
+- Social feature engagement around giving recognition
+- Long-term retention correlation with contribution gamification elements
 
 ---
 
@@ -339,37 +343,37 @@ Logging interactions → Immediate visual feedback → Social recognition → In
 ### Phase 1: MVP Development (12 weeks)
 - **Week 1-2**: Technical setup and core architecture
 - **Week 3-6**: Authentication and circle management
-- **Week 7-10**: Interaction logging and balance tracking
-- **Week 11-12**: UI polish and testing preparation
+- **Week 7-10**: Giving interaction logging and score tracking
+- **Week 11-12**: UI polish and contribution experience testing
 
-### Phase 2: Beta & Launch (8 weeks)
-- **Week 13-16**: Beta testing and iteration
+### Phase 2: Beta & Launch (8 weeks)  
+- **Week 13-16**: Beta testing focused on contribution patterns and iteration
 - **Week 17-20**: Soft launch and performance optimization
 - **Week 21**: Public launch preparation
 
 ### Phase 3: Growth & Enhancement (Ongoing)
-- **Month 4-6**: User feedback integration and basic gamification
-- **Month 7-12**: Advanced gamification features and scalability improvements
+- **Month 4-6**: User feedback integration and basic contribution gamification
+- **Month 7-12**: Advanced gamification features and community building enhancements
 
 ---
 
 ## 🤝 Stakeholder Alignment
 
 ### Development Team
-- Clear technical specifications and architecture decisions
+- Clear technical specifications and architecture decisions for contribution system
 - Regular sprint planning and progress reviews
-- User feedback integration into development cycles
+- User feedback integration focusing on giving experience into development cycles
 
 ### Business Stakeholders
-- Monthly progress reports and metric reviews
+- Monthly progress reports and contribution engagement metric reviews
 - Quarterly business impact assessments
-- Strategic planning for future phases
+- Strategic planning for community building phases
 
-### User Community
-- Regular feedback collection and feature requests
-- Transparent communication about product direction
-- Community involvement in beta testing and iteration
+### User Community  
+- Regular feedback collection focused on contribution experience and feature requests
+- Transparent communication about product direction toward community building
+- Community involvement in beta testing contribution features and iteration
 
 ---
 
-*This PRD serves as the foundational document for GratitudeCoin development, ensuring all stakeholders align on vision, scope, and execution strategy.*
+*This PRD serves as the foundational document for GratitudeCoin development, ensuring all stakeholders align on vision, scope, and execution strategy focused on positive community contribution.*
