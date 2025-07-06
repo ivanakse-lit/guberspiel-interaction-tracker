@@ -15,6 +15,7 @@ import Analytics from "./pages/Analytics";
 import Changelog from "./pages/Changelog";
 import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
+import AuthDebug from "./pages/AuthDebug";
 import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/auth-debug" element={<AuthDebug />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/changelog" element={<Changelog />} />

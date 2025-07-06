@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Heart, HandHeart, Users, Plus, Smile, Trophy, Gift } from 'lucide-react';
+import { Heart, HandHeart, Users, Plus, Smile, Trophy, Gift, Bug } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { changelogEntries } from '@/data/changelog';
@@ -204,6 +204,15 @@ const Index = () => {
             className="text-gray-500 hover:text-gray-700"
           >
             Changelog
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => navigate('/auth-debug')}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            <Bug className="h-4 w-4 mr-1" />
+            Auth Debug
           </Button>
         </div>
         <p className="text-gray-500 text-sm">&copy; 2024 Güberspiel. Spreading love, one interaction at a time.</p>
