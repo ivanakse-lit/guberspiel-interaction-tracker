@@ -42,11 +42,11 @@ const GroupSelector = ({ selectedGroup, setSelectedGroup }: GroupSelectorProps) 
         </SelectTrigger>
         <SelectContent>
           {isLoading ? (
-            <SelectItem value="" disabled>
+            <SelectItem value="loading" disabled>
               Loading your circles...
             </SelectItem>
           ) : groups.length === 0 ? (
-            <SelectItem value="" disabled>
+            <SelectItem value="no-circles" disabled>
               No circles found. Create a circle first.
             </SelectItem>
           ) : (
