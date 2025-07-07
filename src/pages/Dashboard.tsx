@@ -1,10 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { getUserCircles } from '@/services/circleService';
+import { supabase } from '@/integrations/supabase/client';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import BalanceOverview from '@/components/dashboard/BalanceOverview';
 import RecentInteractions from '@/components/dashboard/RecentInteractions';
@@ -44,6 +46,27 @@ const Dashboard = () => {
   const [userCircles, setUserCircles] = useState<CircleMembership[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch user balance from interactions
+  const { data: userBalance = 0 } = useQuery({
+    queryKey: ['user-balance', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return 0;
+
+      const { data, error } = await supabase
+        .from('interactions')
+        .select('points')
+        .eq('giver_id', user.id);
+
+      if (error) {
+        console.error('Error fetching user balance:', error);
+        return 0;
+      }
+
+      return data?.reduce((sum, interaction) => sum + interaction.points, 0) || 0;
+    },
+    enabled: !!user?.id,
+  });
+
   /**
    * Fetch user's circles on component mount
    * Redirects to auth if user is not authenticated
@@ -74,9 +97,6 @@ const Dashboard = () => {
 
     fetchUserCircles();
   }, [user, navigate, toast]);
-
-  // Placeholder balance calculation (to be implemented with actual interaction data)
-  const userBalance = 0;
 
   // Loading state
   if (loading) {

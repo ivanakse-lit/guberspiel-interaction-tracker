@@ -1,60 +1,93 @@
 
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { History, ArrowUp, Calendar, Users, Gift } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Interaction {
-  id: string;
-  type: 'give';
-  title: string;
-  description?: string;
+  id: number;
+  description: string;
   points: number;
-  date: Date;
-  loggedDate: Date;
-  circle: string;
-  otherPerson: string;
+  created_at: string;
+  circle: {
+    name: string;
+  };
+  receiver_name: string;
 }
 
-// Mock interaction data with only giving interactions
-const mockInteractions: Interaction[] = [
-  {
-    id: '1',
-    type: 'give',
-    title: 'Helped with moving',
-    description: 'Carried boxes and furniture to new apartment',
-    points: 3,
-    date: new Date('2024-06-20'),
-    loggedDate: new Date('2024-06-24'),
-    circle: 'Flatmates',
-    otherPerson: 'Sarah'
-  },
-  {
-    id: '2',
-    type: 'give',
-    title: 'Made dinner for everyone',
-    points: 2,
-    date: new Date('2024-06-22'),
-    loggedDate: new Date('2024-06-22'),
-    circle: 'Flatmates',
-    otherPerson: 'Mike'
-  },
-  {
-    id: '3',
-    type: 'give',
-    title: 'Emotional support',
-    description: 'Listened and provided comfort during difficult time',
-    points: 2,
-    date: new Date('2024-06-18'),
-    loggedDate: new Date('2024-06-23'),
-    circle: 'Family',
-    otherPerson: 'Mom'
-  }
-];
-
 const InteractionHistory = () => {
+  const { user } = useAuth();
+
+  const { data: interactions = [], isLoading } = useQuery({
+    queryKey: ['interaction-history', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return [];
+
+      const { data, error } = await supabase
+        .from('interactions')
+        .select(`
+          id,
+          description,
+          points,
+          created_at,
+          receiver_id,
+          circle:circle_id (
+            name
+          )
+        `)
+        .eq('giver_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching interactions:', error);
+        return [];
+      }
+
+      // Get receiver names for the interactions
+      const interactions_with_receivers = await Promise.all(
+        (data || []).map(async (interaction) => {
+          if (interaction.receiver_id) {
+            const { data: membership } = await supabase
+              .from('circle_memberships')
+              .select('user_name')
+              .eq('user_id', interaction.receiver_id)
+              .single();
+            
+            return {
+              ...interaction,
+              receiver_name: membership?.user_name || 'Unknown'
+            };
+          }
+          return { ...interaction, receiver_name: 'Unknown' };
+        })
+      );
+
+      return interactions_with_receivers;
+    },
+    enabled: !!user?.id,
+  });
+
+  if (isLoading) {
+    return (
+      <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2 text-gray-800">
+            <History className="h-5 w-5 text-indigo-500" />
+            <span>Your Giving History</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-gray-500 text-center py-8">Loading your history...</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
       <CardHeader>
@@ -66,7 +99,7 @@ const InteractionHistory = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {mockInteractions.length === 0 ? (
+          {interactions.length === 0 ? (
             <p className="text-gray-500 text-center py-8">
               No giving interactions yet. Start sharing moments of care!
             </p>
@@ -82,7 +115,7 @@ const InteractionHistory = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {mockInteractions.map((interaction) => (
+                {interactions.map((interaction) => (
                   <TableRow key={interaction.id} className="hover:bg-gray-50/50">
                     <TableCell>
                       <Badge
@@ -95,38 +128,28 @@ const InteractionHistory = () => {
                     </TableCell>
                     <TableCell>
                       <div className="space-y-1">
-                        <div className="font-medium text-gray-900">{interaction.title}</div>
-                        {interaction.description && (
-                          <div className="text-sm text-gray-600">{interaction.description}</div>
-                        )}
+                        <div className="font-medium text-gray-900">{interaction.description}</div>
                         <div className="flex items-center text-xs text-gray-500">
                           <Users className="h-3 w-3 mr-1" />
-                          To {interaction.otherPerson}
+                          To {interaction.receiver_name}
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline" className="text-xs">
-                        {interaction.circle}
+                        {interaction.circle?.name || 'Unknown Circle'}
                       </Badge>
                     </TableCell>
                     <TableCell>
                       <div className="space-y-1">
                         <div className="text-sm font-medium text-gray-900">
-                          {format(interaction.date, 'MMM d, yyyy')}
+                          {format(new Date(interaction.created_at), 'MMM d, yyyy')}
                         </div>
                         <div className="text-xs text-gray-500">
-                          {interaction.date.getTime() !== interaction.loggedDate.getTime() ? (
-                            <div className="flex items-center">
-                              <Calendar className="h-3 w-3 mr-1" />
-                              Logged {formatDistanceToNow(interaction.loggedDate, { addSuffix: true })}
-                            </div>
-                          ) : (
-                            <div className="flex items-center">
-                              <Calendar className="h-3 w-3 mr-1" />
-                              {formatDistanceToNow(interaction.date, { addSuffix: true })}
-                            </div>
-                          )}
+                          <div className="flex items-center">
+                            <Calendar className="h-3 w-3 mr-1" />
+                            {formatDistanceToNow(new Date(interaction.created_at), { addSuffix: true })}
+                          </div>
                         </div>
                       </div>
                     </TableCell>

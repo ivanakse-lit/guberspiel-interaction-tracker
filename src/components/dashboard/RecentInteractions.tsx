@@ -1,60 +1,99 @@
 
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Heart, ArrowUp, Calendar, Clock } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface RecentInteraction {
-  id: string;
-  type: 'give';
-  title: string;
+  id: number;
+  description: string;
   points: number;
-  date: Date;
-  loggedDate: Date;
-  circle: string;
-  otherPerson: string;
+  created_at: string;
+  circle: {
+    name: string;
+  };
+  receiver_profile?: {
+    user_name: string;
+  };
 }
-
-// Mock recent interactions with only giving
-const mockRecentInteractions: RecentInteraction[] = [
-  {
-    id: '1',
-    type: 'give',
-    title: 'Helped with moving',
-    points: 3,
-    date: new Date('2024-06-20'),
-    loggedDate: new Date('2024-06-24'),
-    circle: 'Flatmates',
-    otherPerson: 'Sarah'
-  },
-  {
-    id: '2',
-    type: 'give',
-    title: 'Made dinner for everyone',
-    points: 2,
-    date: new Date('2024-06-22'),
-    loggedDate: new Date('2024-06-22'),
-    circle: 'Flatmates',
-    otherPerson: 'Mike'
-  },
-  {
-    id: '3',
-    type: 'give',
-    title: 'Emotional support',
-    points: 2,
-    date: new Date('2024-06-18'),
-    loggedDate: new Date('2024-06-23'),
-    circle: 'Family',
-    otherPerson: 'Mom'
-  }
-];
 
 /**
  * Component to display recent giving interactions/moments of care
- * Shows detailed information about when interactions occurred vs when they were logged
+ * Fetches real data from Supabase interactions table
  */
 const RecentInteractions = () => {
+  const { user } = useAuth();
+
+  const { data: interactions = [], isLoading } = useQuery({
+    queryKey: ['recent-interactions', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return [];
+
+      const { data, error } = await supabase
+        .from('interactions')
+        .select(`
+          id,
+          description,
+          points,
+          created_at,
+          receiver_id,
+          circle:circle_id (
+            name
+          )
+        `)
+        .eq('giver_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (error) {
+        console.error('Error fetching interactions:', error);
+        return [];
+      }
+
+      // Get receiver names for the interactions
+      const interactions_with_receivers = await Promise.all(
+        (data || []).map(async (interaction) => {
+          if (interaction.receiver_id) {
+            const { data: membership } = await supabase
+              .from('circle_memberships')
+              .select('user_name')
+              .eq('user_id', interaction.receiver_id)
+              .single();
+            
+            return {
+              ...interaction,
+              receiver_name: membership?.user_name || 'Unknown'
+            };
+          }
+          return { ...interaction, receiver_name: 'Unknown' };
+        })
+      );
+
+      return interactions_with_receivers;
+    },
+    enabled: !!user?.id,
+  });
+
+  if (isLoading) {
+    return (
+      <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2 text-gray-800">
+            <Heart className="h-5 w-5 text-rose-500" />
+            <span>Recent Care Given</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-gray-500 text-center py-8">Loading your interactions...</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-300">
       <CardHeader>
@@ -65,13 +104,13 @@ const RecentInteractions = () => {
         <p className="text-gray-600 text-sm">Your latest acts of kindness and support</p>
       </CardHeader>
       <CardContent className="space-y-4">
-        {mockRecentInteractions.length === 0 ? (
+        {interactions.length === 0 ? (
           <p className="text-gray-500 text-center py-8">
             No giving interactions yet. Start sharing moments of care!
           </p>
         ) : (
           <div className="space-y-4">
-            {mockRecentInteractions.map((interaction) => (
+            {interactions.map((interaction) => (
               <div
                 key={interaction.id}
                 className="p-4 rounded-lg border border-gray-100 hover:border-gray-200 transition-colors bg-white/50"
@@ -87,28 +126,26 @@ const RecentInteractions = () => {
                         <span>Gave</span>
                       </Badge>
                       <Badge variant="outline" className="text-xs">
-                        {interaction.circle}
+                        {interaction.circle?.name || 'Unknown Circle'}
                       </Badge>
                     </div>
                     
                     <div>
-                      <h4 className="font-medium text-gray-900">{interaction.title}</h4>
+                      <h4 className="font-medium text-gray-900">{interaction.description}</h4>
                       <p className="text-sm text-gray-600">
-                        To {interaction.otherPerson}
+                        To {interaction.receiver_name}
                       </p>
                     </div>
                     
                     <div className="flex items-center space-x-4 text-xs text-gray-500">
                       <div className="flex items-center">
                         <Calendar className="h-3 w-3 mr-1" />
-                        Happened: {format(interaction.date, 'MMM d, yyyy')}
+                        {format(new Date(interaction.created_at), 'MMM d, yyyy')}
                       </div>
-                      {interaction.date.getTime() !== interaction.loggedDate.getTime() && (
-                        <div className="flex items-center">
-                          <Clock className="h-3 w-3 mr-1" />
-                          Logged: {formatDistanceToNow(interaction.loggedDate, { addSuffix: true })}
-                        </div>
-                      )}
+                      <div className="flex items-center">
+                        <Clock className="h-3 w-3 mr-1" />
+                        {formatDistanceToNow(new Date(interaction.created_at), { addSuffix: true })}
+                      </div>
                     </div>
                   </div>
                   
