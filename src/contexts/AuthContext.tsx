@@ -29,7 +29,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('Initial session:', session)
       setUser(session?.user ?? null)
       setLoading(false)
     })
@@ -37,7 +36,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state changed:', event, session)
         setUser(session?.user ?? null)
         setLoading(false)
       }
@@ -47,7 +45,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [])
 
   const signUp = async (email: string, password: string, name: string) => {
-    console.log('Signing up with email:', email)
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -62,7 +59,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }
 
   const signIn = async (email: string, password: string) => {
-    console.log('Signing in with email:', email)
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password
@@ -71,10 +67,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }
 
   const signInWithGoogle = async () => {
-    console.log('Attempting Google OAuth...')
-    console.log('Current URL:', window.location.origin)
-    console.log('Supabase URL:', 'https://jqebudjmyxhtsamrzkfm.supabase.co')
-    
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -86,12 +78,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     })
     
-    console.log('Google OAuth call completed:', { error })
     return { error }
   }
 
   const signOut = async () => {
-    console.log('Signing out...')
     await supabase.auth.signOut()
   }
 
