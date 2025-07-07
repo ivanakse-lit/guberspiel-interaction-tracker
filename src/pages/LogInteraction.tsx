@@ -6,6 +6,8 @@ import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import InteractionTypeSelector from '@/components/log-interaction/InteractionTypeSelector';
 import DateSelector from '@/components/log-interaction/DateSelector';
 import InteractionForm from '@/components/log-interaction/InteractionForm';
@@ -16,6 +18,7 @@ import ValueSelector from '@/components/log-interaction/ValueSelector';
 const LogInteraction = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth();
   
   const [interactionType, setInteractionType] = useState('give');
   const [title, setTitle] = useState('');
@@ -24,14 +27,9 @@ const LogInteraction = () => {
   const [selectedPeople, setSelectedPeople] = useState<string[]>([]);
   const [value, setValue] = useState(1);
   const [interactionDate, setInteractionDate] = useState<Date>(new Date());
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Mock data
-  const groups = [
-    { id: 'flatmates', name: 'Flatmates' },
-    { id: 'study-group', name: 'Study Group' },
-    { id: 'family', name: 'Family' },
-  ];
-
+  // Mock data for people selection (this would come from the selected circle's members in a real app)
   const people = [
     { id: 'sarah', name: 'Sarah', group: 'flatmates' },
     { id: 'mike', name: 'Mike', group: 'flatmates' },
@@ -46,8 +44,18 @@ const LogInteraction = () => {
     return people.filter(p => p.group === groupId).length;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to log interactions.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (!title || !selectedGroup || selectedPeople.length === 0) {
       toast({
         title: "Missing information",
@@ -57,16 +65,72 @@ const LogInteraction = () => {
       return;
     }
 
-    const isEntireGroup = selectedPeople.includes('entire-group');
-    const groupMemberCount = getGroupMemberCount(selectedGroup);
-    const finalScore = isEntireGroup ? value * groupMemberCount : value;
+    setIsSubmitting(true);
 
-    toast({
-      title: "Care interaction logged!",
-      description: `Successfully recorded your act of care (+${finalScore} points) on ${format(interactionDate, 'PPP')}.`,
-    });
+    try {
+      const isEntireGroup = selectedPeople.includes('entire-group');
+      const groupMemberCount = getGroupMemberCount(selectedGroup);
+      const finalScore = isEntireGroup ? value * groupMemberCount : value;
 
-    navigate('/dashboard');
+      // For entire group interactions, we'll create one interaction record
+      // For individual interactions, we'll create one record per selected person
+      const interactionsToCreate = [];
+
+      if (isEntireGroup) {
+        // Create a single interaction for the entire group
+        interactionsToCreate.push({
+          circle_id: parseInt(selectedGroup),
+          giver_id: user.id,
+          receiver_id: null, // null indicates it's for the entire group
+          description: title + (description ? ` - ${description}` : ''),
+          points: finalScore,
+          created_at: interactionDate.toISOString()
+        });
+      } else {
+        // Create individual interactions for each selected person
+        // For now, we'll create one interaction with null receiver_id since we don't have actual user IDs
+        // In a real implementation, you'd map the selected people to actual user IDs
+        interactionsToCreate.push({
+          circle_id: parseInt(selectedGroup),
+          giver_id: user.id,
+          receiver_id: null, // Would be the actual receiver's user ID
+          description: title + (description ? ` - ${description}` : ''),
+          points: value,
+          created_at: interactionDate.toISOString()
+        });
+      }
+
+      // Insert the interactions into the database
+      const { error } = await supabase
+        .from('interactions')
+        .insert(interactionsToCreate);
+
+      if (error) {
+        console.error('Error creating interaction:', error);
+        toast({
+          title: "Error logging interaction",
+          description: "There was a problem saving your interaction. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      toast({
+        title: "Care interaction logged!",
+        description: `Successfully recorded your act of care (+${finalScore} points) on ${format(interactionDate, 'PPP')}.`,
+      });
+
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Error submitting interaction:', error);
+      toast({
+        title: "Error logging interaction",
+        description: "There was a problem saving your interaction. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -118,7 +182,6 @@ const LogInteraction = () => {
                 <GroupSelector 
                   selectedGroup={selectedGroup}
                   setSelectedGroup={setSelectedGroup}
-                  groups={groups}
                 />
 
                 <PeopleSelector 
@@ -140,8 +203,9 @@ const LogInteraction = () => {
                   type="submit" 
                   className="w-full bg-indigo-600 hover:bg-indigo-700"
                   size="lg"
+                  disabled={isSubmitting}
                 >
-                  Log Care Given
+                  {isSubmitting ? 'Logging...' : 'Log Care Given'}
                 </Button>
               </form>
             </CardContent>
