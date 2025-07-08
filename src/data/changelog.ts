@@ -11,7 +11,8 @@ export const changelogEntries: ChangelogEntry[] = [
         "Updated authentication tokens across all client configurations"
       ],
       changed: [
-        "Refreshed Supabase client initialization with new secure tokens"
+        "Refreshed Supabase client initialization with new secure tokens",
+        "Removed demo/mock data from application for cleaner production deployment"
       ]
     }
   },
