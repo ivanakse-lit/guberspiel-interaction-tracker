@@ -1,7 +1,20 @@
-
 import { ChangelogEntry } from '@/types/changelog';
 
 export const changelogEntries: ChangelogEntry[] = [
+  {
+    version: "1.2.2",
+    date: "2025-01-08",
+    type: "patch",
+    changes: {
+      fixed: [
+        "Regenerated Supabase API keys for enhanced security after public exposure",
+        "Updated authentication tokens across all client configurations"
+      ],
+      changed: [
+        "Refreshed Supabase client initialization with new secure tokens"
+      ]
+    }
+  },
   {
     version: "1.2.1",
     date: "2024-06-26",

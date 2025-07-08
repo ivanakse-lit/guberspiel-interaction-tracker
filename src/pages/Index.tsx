@@ -16,7 +16,7 @@ const Index = () => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const currentVersion = changelogEntries[0]?.version || '1.0.0';
+  const currentVersion = changelogEntries[0]?.version || '1.2.2';
 
   const handleSignOut = async () => {
     try {
