@@ -90,11 +90,24 @@ export const getUserCircles = async () => {
   const user = await supabase.auth.getUser()
   if (!user.data.user) throw new Error('Not authenticated')
 
+  // Fix the ambiguous column reference by properly qualifying table names
   const { data, error } = await supabase
     .from('circle_memberships')
     .select(`
-      *,
-      circle (*)
+      id,
+      circle_id,
+      user_id,
+      user_name,
+      joined_at,
+      created_at,
+      circle:circle_id (
+        id,
+        name,
+        description,
+        invite_code,
+        created_by,
+        created_at
+      )
     `)
     .eq('user_id', user.data.user.id)
 

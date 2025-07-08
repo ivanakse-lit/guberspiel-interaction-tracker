@@ -72,44 +72,38 @@ const LogInteraction = () => {
       const groupMemberCount = getGroupMemberCount(selectedGroup);
       const finalScore = isEntireGroup ? value * groupMemberCount : value;
 
-      // For entire group interactions, we'll create one interaction record
-      // For individual interactions, we'll create one record per selected person
-      const interactionsToCreate = [];
+      // Ensure circle_id is a number
+      const circleId = parseInt(selectedGroup, 10);
+      
+      if (isNaN(circleId)) {
+        throw new Error('Invalid circle ID');
+      }
 
-      if (isEntireGroup) {
-        // Create a single interaction for the entire group
-        interactionsToCreate.push({
-          circle_id: parseInt(selectedGroup),
+      console.log('Creating interaction with:', {
+        circle_id: circleId,
+        giver_id: user.id,
+        description: title + (description ? ` - ${description}` : ''),
+        points: finalScore,
+        created_at: interactionDate.toISOString()
+      });
+
+      // Create the interaction record
+      const { error } = await supabase
+        .from('interactions')
+        .insert([{
+          circle_id: circleId,
           giver_id: user.id,
-          receiver_id: null, // null indicates it's for the entire group
+          receiver_id: null, // null indicates it's for the entire group or general interaction
           description: title + (description ? ` - ${description}` : ''),
           points: finalScore,
           created_at: interactionDate.toISOString()
-        });
-      } else {
-        // Create individual interactions for each selected person
-        // For now, we'll create one interaction with null receiver_id since we don't have actual user IDs
-        // In a real implementation, you'd map the selected people to actual user IDs
-        interactionsToCreate.push({
-          circle_id: parseInt(selectedGroup),
-          giver_id: user.id,
-          receiver_id: null, // Would be the actual receiver's user ID
-          description: title + (description ? ` - ${description}` : ''),
-          points: value,
-          created_at: interactionDate.toISOString()
-        });
-      }
-
-      // Insert the interactions into the database
-      const { error } = await supabase
-        .from('interactions')
-        .insert(interactionsToCreate);
+        }]);
 
       if (error) {
         console.error('Error creating interaction:', error);
         toast({
           title: "Error logging interaction",
-          description: "There was a problem saving your interaction. Please try again.",
+          description: `Database error: ${error.message}`,
           variant: "destructive"
         });
         return;
